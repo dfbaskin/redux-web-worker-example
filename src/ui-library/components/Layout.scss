@@ -7,4 +7,8 @@
   grid-template-columns: 1fr;
   grid-template-rows: 2.5rem 2.5rem 1fr;
   grid-gap: 1rem;
+
+  > div:nth-of-type(3) {
+    overflow: auto;
+  }
 }
