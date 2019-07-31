@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Hello } from "../ui-library/components/Hello";
+import { Main } from "../ui-library/components/Main";
+import { AppStoreContext } from "../state-library/AppStoreContext";
+import { appStoreMethods } from "./uiThreadAppStoreMethods";
+
 import "../ui-library/index.scss";
-import { Layout } from "../ui-library/components/Layout";
 
 ReactDOM.render(
-  <Layout
-    renderMenu={() => <Hello name="Menu" />}
-    renderHeader={() => <Hello name="Header" />}
-    renderTable={() => <Hello name="Table" />}
-  />,
+  <AppStoreContext.Provider value={appStoreMethods}>
+    <Main title="UI Thread" />
+  </AppStoreContext.Provider>,
   document.getElementById("root")
 );

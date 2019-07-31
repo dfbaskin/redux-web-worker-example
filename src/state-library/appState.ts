@@ -1,6 +1,6 @@
 export interface ColumnDefinition {
   id: string;
-  width?: number;
+  width: number;
 }
 
 export interface ApplicationState {

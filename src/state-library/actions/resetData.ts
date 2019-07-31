@@ -1,6 +1,5 @@
 import { PayloadAction, payloadActionCreator } from "../common";
 import { ApplicationState } from "../appState";
-import faker from "faker";
 
 interface Payload {
   rows: number;
@@ -9,12 +8,16 @@ interface Payload {
 
 const DEFAULT_WIDTH = 80;
 
+function randomBetween(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 const defaultData: [number, (row: number) => any][] = [
   [50, row => row + 1],
-  [100, () => faker.name.findName()],
-  [DEFAULT_WIDTH, () => faker.random.number({ min: 100, max: 900 })],
-  [DEFAULT_WIDTH, () => faker.random.number({ min: 0, max: 1000 })],
-  [DEFAULT_WIDTH, () => faker.random.number({ min: 100000, max: 999999 })]
+  [DEFAULT_WIDTH, () => randomBetween(100, 900)],
+  [DEFAULT_WIDTH, () => randomBetween(0, 1000)],
+  [DEFAULT_WIDTH, () => randomBetween(100000, 999999)],
+  [DEFAULT_WIDTH, () => Math.random()]
 ];
 
 export const resetDataAction = payloadActionCreator<Payload>("RESET_DATA");

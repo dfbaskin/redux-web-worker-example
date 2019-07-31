@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Hello } from "../ui-library/components/Hello";
+import { Main } from "../ui-library/components/Main";
+
 import "../ui-library/index.scss";
 
-ReactDOM.render(<Hello name="App Two" />, document.getElementById("root"));
+ReactDOM.render(
+  <Main title="Web Worker Thread" />,
+  document.getElementById("root")
+);

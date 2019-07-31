@@ -16,11 +16,15 @@ export default [
         targets: ["./build/"]
       }),
       resolve(),
+      commonjs({
+        namedExports: {
+          react: ["useContext"]
+        }
+      }),
       typescript({
         objectHashIgnoreUnknownHack: false,
         clean: true
       }),
-      commonjs(),
       postcss({
         plugins: [postcssSass()]
       }),
@@ -48,11 +52,15 @@ export default [
     input: "src/app-two/app-two.tsx",
     plugins: [
       resolve(),
+      commonjs({
+        namedExports: {
+          react: ["useContext"]
+        }
+      }),
       typescript({
         objectHashIgnoreUnknownHack: false,
         clean: true
       }),
-      commonjs(),
       postcss({
         plugins: [postcssSass()]
       }),
