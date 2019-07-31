@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reset data action should create default data 1`] = `
+Object {
+  "columns": Array [
+    Object {
+      "id": "C1",
+      "width": 50,
+    },
+    Object {
+      "id": "C2",
+      "width": 100,
+    },
+    Object {
+      "id": "C3",
+      "width": 80,
+    },
+    Object {
+      "id": "C4",
+      "width": 80,
+    },
+    Object {
+      "id": "C5",
+      "width": 80,
+    },
+  ],
+  "data": Array [],
+}
+`;

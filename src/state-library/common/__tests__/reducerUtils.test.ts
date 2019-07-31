@@ -5,6 +5,10 @@ interface TestState {
   value: string;
 }
 
+const initialState: TestState = {
+  value: ""
+};
+
 function testActionCreator(type: string): () => Action {
   const fn = function(): Action {
     return {
@@ -27,7 +31,7 @@ function testReducerCreator(
 
 describe("create reducer", () => {
   it("should handle zero reducers", () => {
-    const reducer = createReducer<TestState>([]);
+    const reducer = createReducer<TestState>([], initialState);
     const oldState: TestState = {
       value: "something"
     };
@@ -36,11 +40,14 @@ describe("create reducer", () => {
   });
 
   it("should handle many reducers", () => {
-    const reducer = createReducer<TestState>([
-      [testActionCreator("A"), testReducerCreator("A")],
-      [testActionCreator("B"), testReducerCreator("B")],
-      [testActionCreator("C"), testReducerCreator("C")]
-    ]);
+    const reducer = createReducer<TestState>(
+      [
+        [testActionCreator("A"), testReducerCreator("A")],
+        [testActionCreator("B"), testReducerCreator("B")],
+        [testActionCreator("C"), testReducerCreator("C")]
+      ],
+      initialState
+    );
     let state: TestState = {
       value: "n/a"
     };
@@ -53,10 +60,13 @@ describe("create reducer", () => {
   });
 
   it("should not change state reference when unchanged", () => {
-    const reducer = createReducer<TestState>([
-      [testActionCreator("A"), testReducerCreator("A")],
-      [testActionCreator("B"), testReducerCreator("B")]
-    ]);
+    const reducer = createReducer<TestState>(
+      [
+        [testActionCreator("A"), testReducerCreator("A")],
+        [testActionCreator("B"), testReducerCreator("B")]
+      ],
+      initialState
+    );
     const oldState: TestState = {
       value: "A"
     };

@@ -7,11 +7,11 @@ interface Reducer<T> {
 
 type Definition = [Function, Function];
 
-export function createReducer<T>(reducers: Definition[]) {
+export function createReducer<T>(reducers: Definition[], initialState: T) {
   const reducerMap = new Map<string, Reducer<T>>(
     reducers.map(([ac, rd]) => [ac.toString(), rd as Reducer<T>])
   );
-  return (state: T, action: Action): T => {
+  return (state: T | undefined = initialState, action: Action): T => {
     const reducer = reducerMap.get(action.type);
     return reducer
       ? produce(state, draft => {
