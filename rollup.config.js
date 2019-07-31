@@ -5,6 +5,8 @@ import copy from "rollup-plugin-copy";
 import replace from "rollup-plugin-replace";
 import cleaner from "rollup-plugin-cleaner";
 import htmlTemplate from "rollup-plugin-generate-html-template";
+import postcss from "rollup-plugin-postcss";
+import postcssSass from "@csstools/postcss-sass";
 
 export default [
   {
@@ -19,6 +21,9 @@ export default [
         clean: true
       }),
       commonjs(),
+      postcss({
+        plugins: [postcssSass()]
+      }),
       replace({
         "process.env.NODE_ENV": JSON.stringify("development")
       }),
@@ -48,6 +53,9 @@ export default [
         clean: true
       }),
       commonjs(),
+      postcss({
+        plugins: [postcssSass()]
+      }),
       replace({
         "process.env.NODE_ENV": JSON.stringify("development")
       }),
