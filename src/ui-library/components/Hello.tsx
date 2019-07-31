@@ -1,5 +1,9 @@
 import React from "react";
 
-export function Hello() {
-  return <div>Hello!</div>;
+interface Props {
+  name: string;
+}
+
+export function Hello({ name }: Props) {
+  return <div>Hello from {name}!</div>;
 }
