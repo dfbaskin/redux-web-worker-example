@@ -4,6 +4,7 @@ import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import replace from "rollup-plugin-replace";
 import cleaner from "rollup-plugin-cleaner";
+import htmlTemplate from "rollup-plugin-generate-html-template";
 
 export default [
   {
@@ -23,6 +24,10 @@ export default [
           { src: "src/app-one/app-one.html", dest: "build" },
           { src: "src/public/**/*", dest: "build" }
         ]
+      }),
+      htmlTemplate({
+        template: "src/app-one/app-one.html",
+        target: "build/app-one.html"
       })
     ],
     output: {
@@ -42,6 +47,10 @@ export default [
       }),
       copy({
         targets: [{ src: "src/app-two/app-two.html", dest: "build" }]
+      }),
+      htmlTemplate({
+        template: "src/app-two/app-two.html",
+        target: "build/app-two.html"
       })
     ],
     output: {
