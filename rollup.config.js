@@ -18,7 +18,7 @@ export default [
       resolve(),
       commonjs({
         namedExports: {
-          react: ["useContext"]
+          react: ["createContext", "useContext", "useState", "useEffect"]
         }
       }),
       typescript({
@@ -54,7 +54,7 @@ export default [
       resolve(),
       commonjs({
         namedExports: {
-          react: ["useContext"]
+          react: ["createContext", "useContext", "useState", "useEffect"]
         }
       }),
       typescript({

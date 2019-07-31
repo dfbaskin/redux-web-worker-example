@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ColumnDefinition } from "../../state-library/appState";
+import { AppStoreContext } from "../../state-library/AppStoreContext";
 
-interface Props {
+interface GridState {
   columns: ColumnDefinition[];
   data: any[][];
 }
 
-export function DataGrid({ columns, data }: Props) {
+export function DataGrid() {
+  const [{ columns, data }, setGridState] = useState<GridState>({
+    columns: [],
+    data: []
+  });
+  const { selectors, subscribe } = useContext(AppStoreContext);
+  useEffect(() => {
+    const { unsubscribe } = subscribe(selectors.allDataSelector, setGridState);
+    return unsubscribe;
+  }, [selectors, subscribe, setGridState]);
   return (
     <div>
       <table>

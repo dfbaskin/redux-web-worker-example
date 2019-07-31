@@ -12,7 +12,7 @@ export function Main({ title }: Props) {
     <Layout
       renderMenu={() => <Header title={title} />}
       renderHeader={() => <div>...</div>}
-      renderTable={() => <DataGrid columns={[]} data={[]} />}
+      renderTable={() => <DataGrid />}
     />
   );
 }
