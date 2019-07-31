@@ -1,4 +1,4 @@
-import typescript from "rollup-plugin-typescript";
+import typescript from "rollup-plugin-typescript2";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
@@ -13,9 +13,12 @@ export default [
       cleaner({
         targets: ["./build/"]
       }),
-      typescript(),
-      commonjs(),
       resolve(),
+      typescript({
+        objectHashIgnoreUnknownHack: false,
+        clean: true
+      }),
+      commonjs(),
       replace({
         "process.env.NODE_ENV": JSON.stringify("development")
       }),
@@ -39,9 +42,12 @@ export default [
   {
     input: "src/app-two/app-two.tsx",
     plugins: [
-      typescript(),
-      commonjs(),
       resolve(),
+      typescript({
+        objectHashIgnoreUnknownHack: false,
+        clean: true
+      }),
+      commonjs(),
       replace({
         "process.env.NODE_ENV": JSON.stringify("development")
       }),
