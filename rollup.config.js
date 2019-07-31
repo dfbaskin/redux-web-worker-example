@@ -3,11 +3,15 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import replace from "rollup-plugin-replace";
+import cleaner from "rollup-plugin-cleaner";
 
 export default [
   {
     input: "src/app-one/app-one.tsx",
     plugins: [
+      cleaner({
+        targets: ["./build/"]
+      }),
       typescript(),
       commonjs(),
       resolve(),
@@ -22,7 +26,8 @@ export default [
       })
     ],
     output: {
-      file: "build/app-one.js",
+      dir: "build",
+      entryFileNames: "[name].[hash].js",
       format: "esm"
     }
   },
@@ -40,7 +45,8 @@ export default [
       })
     ],
     output: {
-      file: "build/app-two.js",
+      dir: "build",
+      entryFileNames: "[name].[hash].js",
       format: "esm"
     }
   }
