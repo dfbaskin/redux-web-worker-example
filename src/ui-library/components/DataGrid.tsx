@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import { ColumnDefinition } from "../../state-library/appState";
-import { AppStoreContext } from "../../state-library/AppStoreContext";
+import { useStateSelector, WithSelector } from "../hooks/useStateSelector";
 
 interface GridState {
   columns: ColumnDefinition[];
@@ -8,15 +8,10 @@ interface GridState {
 }
 
 export function DataGrid() {
-  const [{ columns, data }, setGridState] = useState<GridState>({
+  const { columns, data } = useStateSelector(WithSelector.allDataSelector) || {
     columns: [],
     data: []
-  });
-  const { selectors, subscribe } = useContext(AppStoreContext);
-  useEffect(() => {
-    const { unsubscribe } = subscribe(selectors.allDataSelector, setGridState);
-    return unsubscribe;
-  }, [selectors, subscribe, setGridState]);
+  };
   return (
     <div>
       <table>
