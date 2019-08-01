@@ -16,8 +16,8 @@ const defaultData: [number, (row: number) => any][] = [
   [50, row => row + 1],
   [DEFAULT_WIDTH, () => randomBetween(100, 900)],
   [DEFAULT_WIDTH, () => randomBetween(0, 1000)],
-  [DEFAULT_WIDTH, () => randomBetween(100000, 999999)],
-  [DEFAULT_WIDTH, () => Math.random()]
+  [100, () => randomBetween(100000, 999999)],
+  [150, () => Math.random()]
 ];
 
 export const resetDataAction = payloadActionCreator<Payload>("RESET_DATA");

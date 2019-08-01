@@ -9,7 +9,7 @@ interface Props {
 export function Header({ title }: Props) {
   const { dispatch } = useContext(AppStoreContext);
   const onClick = () => {
-    dispatch(resetDataAction({ rows: 50, cols: 20 }));
+    dispatch(resetDataAction({ rows: 50, cols: 30 }));
   };
   return (
     <div>
