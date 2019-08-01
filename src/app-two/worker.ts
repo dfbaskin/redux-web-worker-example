@@ -2,10 +2,11 @@ import { Action } from "../state-library/common";
 import { store } from "../state-library/appStore";
 import { allDataSelector } from "../state-library/selectors";
 import { expose } from "comlink";
+import { ApplicationState } from "../state-library/appState";
 
 const workerMethods = {
   selectors: {
-    allDataSelector: () => allDataSelector(store.getState())
+    allDataSelector: selectState(allDataSelector)
   },
   dispatch(action: Action) {
     store.dispatch(action);
@@ -18,3 +19,18 @@ const workerMethods = {
 };
 
 expose(workerMethods);
+
+// Only return selected state if it has actually changed (so it doesn't
+// go through serialization/deserializaton process).
+function selectState<T>(selector: (state: ApplicationState) => T) {
+  let lastValue: T | undefined = undefined;
+  return () => {
+    const currentValue = selector(store.getState());
+    if (lastValue === currentValue) {
+      return undefined;
+    }
+
+    lastValue = currentValue;
+    return currentValue;
+  };
+}

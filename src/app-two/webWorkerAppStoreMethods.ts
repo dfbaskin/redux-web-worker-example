@@ -30,6 +30,9 @@ export function initializeWorker(): AppStoreMethods {
       const subscriptionId = ++subscriptionIdCounter;
       const name = selector.name;
       subscriptions.set(subscriptionId, async () => {
+        // Proxy the call to the selector. If undefined is returned,
+        // then the selector value has not changed (and will not
+        // need to be serialized/deserialized.
         const selected: T = await workerProxy.selectors[name]();
         if (selected !== undefined) {
           callback(selected);
