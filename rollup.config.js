@@ -4,7 +4,7 @@ import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import replace from "rollup-plugin-replace";
 import cleaner from "rollup-plugin-cleaner";
-import htmlTemplate from "rollup-plugin-generate-html-template";
+import htmlTemplate from "./plugins/update-html";
 import postcss from "rollup-plugin-postcss";
 import postcssSass from "@csstools/postcss-sass";
 import OMT from "@surma/rollup-plugin-off-main-thread";
