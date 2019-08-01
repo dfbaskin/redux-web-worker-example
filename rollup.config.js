@@ -7,6 +7,7 @@ import cleaner from "rollup-plugin-cleaner";
 import htmlTemplate from "rollup-plugin-generate-html-template";
 import postcss from "rollup-plugin-postcss";
 import postcssSass from "@csstools/postcss-sass";
+import OMT from "@surma/rollup-plugin-off-main-thread";
 
 export default [
   {
@@ -61,6 +62,7 @@ export default [
         objectHashIgnoreUnknownHack: false,
         clean: true
       }),
+      OMT(),
       postcss({
         plugins: [postcssSass()]
       }),
@@ -78,7 +80,7 @@ export default [
     output: {
       dir: "build",
       entryFileNames: "[name].[hash].js",
-      format: "esm"
+      format: "amd"
     }
   }
 ];

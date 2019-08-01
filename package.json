@@ -11,6 +11,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "comlink": "^4.0.2",
     "immer": "^3.1.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -22,6 +23,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@csstools/postcss-sass": "^4.0.0",
+    "@surma/rollup-plugin-off-main-thread": "^1.1.1",
     "@types/faker": "^4.1.5",
     "@types/jest": "^24.0.16",
     "@types/react": "^16.8.23",
