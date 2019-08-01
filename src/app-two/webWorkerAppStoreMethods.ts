@@ -2,11 +2,17 @@ import { AppStoreMethods } from "../state-library/AppStoreContext";
 import { Action } from "../state-library/common";
 import { allDataSelector } from "../state-library/selectors";
 import { initialState } from "../state-library/appState";
-import { wrap, proxy } from "comlink";
+import { proxy, wrap } from "comlink";
+
+interface WorkerProxy {
+  selectors: any;
+  dispatch(action: Action): Promise<void>;
+  onUpdate(callback: () => Promise<void>): Promise<void>;
+}
 
 export function initializeWorker(): AppStoreMethods {
   const worker = new Worker("./worker.ts");
-  const workerProxy: any = wrap(worker);
+  const workerProxy: WorkerProxy = wrap(worker);
 
   let subscriptionIdCounter = 0;
   const subscriptions = new Map<number, () => Promise<void>>();
@@ -24,7 +30,7 @@ export function initializeWorker(): AppStoreMethods {
       const subscriptionId = ++subscriptionIdCounter;
       const name = selector.name;
       subscriptions.set(subscriptionId, async () => {
-        const selected = await workerProxy.selectors[name]();
+        const selected: T = await workerProxy.selectors[name]();
         if (selected !== undefined) {
           callback(selected);
         }
