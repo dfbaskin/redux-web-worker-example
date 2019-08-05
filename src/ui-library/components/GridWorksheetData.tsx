@@ -1,14 +1,19 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { useStateSelector, WithSelector } from "../hooks/useStateSelector";
-import { dataViewSelector } from "../../state-library/selectors";
+import React, { useContext, useRef } from "react";
 import { useWindowReisze } from "../hooks/useWindowResize";
 import { AppStoreContext } from "../../state-library/AppStoreContext";
 import {
-  setGridSizeAction,
-  setGridScrollAction
+  setGridScrollAction,
+  setGridSizeAction
 } from "../../state-library/actions";
+import { CellDetails } from "../../state-library/selectors/dataViewSelector";
 
-export function GridWorksheetData() {
+interface Props {
+  viewData: CellDetails[];
+  dataWidth: number;
+  dataHeight: number;
+}
+
+export function GridWorksheetData({ viewData, dataWidth, dataHeight }: Props) {
   const divRef = useRef<HTMLDivElement>(null);
   const { dispatch } = useContext(AppStoreContext);
   useWindowReisze(() => {
@@ -23,13 +28,6 @@ export function GridWorksheetData() {
       dispatch(setGridScrollAction({ scrollLeft, scrollTop }));
     }
   };
-  const { viewData, dataWidth, dataHeight } =
-    useStateSelector(WithSelector.dataViewSelector) ||
-    ({
-      viewData: [],
-      dataWidth: 0,
-      dataHeight: 0
-    } as ReturnType<typeof dataViewSelector>);
   return (
     <div ref={divRef} onScroll={onScroll}>
       <div style={{ width: dataWidth, height: dataHeight }}>

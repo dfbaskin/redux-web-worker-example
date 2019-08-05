@@ -1,14 +1,31 @@
 import { createSelector } from "reselect";
 import { stateSelector } from "./stateSelector";
 
+const ROW_HEADER_WIDTH = 60;
 const CELL_HEIGHT = 30;
 
-interface CellDetails {
+export interface CellDetails {
   value: any;
   top: number;
   left: number;
   row: number;
   col: number;
+  width: number;
+  height: number;
+}
+
+export interface ColumnHeaderDetails {
+  top: number;
+  left: number;
+  col: number;
+  width: number;
+  height: number;
+}
+
+export interface RowHeaderDetails {
+  top: number;
+  left: number;
+  row: number;
   width: number;
   height: number;
 }
@@ -58,20 +75,43 @@ export const dataViewSelector = createSelector(
     );
 
     const viewData: CellDetails[] = [];
+    const columnHeaders: ColumnHeaderDetails[] = [];
+    const rowHeaders: RowHeaderDetails[] = [];
     if (colStart !== -1) {
       const rowEnd = Math.min(rowStart + rowCount, data.length);
       for (let rowIdx = rowStart; rowIdx < rowEnd; rowIdx++) {
+        const top = rowIdx * CELL_HEIGHT;
+        const height = CELL_HEIGHT + 1;
+        rowHeaders.push({
+          top: top - scrollTop,
+          left: 0,
+          row: rowIdx,
+          width: ROW_HEADER_WIDTH,
+          height
+        });
         const colEnd = Math.min(colStart + colCount, bounds.length);
+        if (rowIdx === rowStart) {
+          for (let colIdx = colStart; colIdx < colEnd; colIdx++) {
+            const { left, width } = bounds[colIdx];
+            columnHeaders.push({
+              top: 0,
+              left: left - scrollLeft,
+              col: colIdx,
+              width,
+              height: CELL_HEIGHT
+            });
+          }
+        }
         for (let colIdx = colStart; colIdx < colEnd; colIdx++) {
           const { left, width } = bounds[colIdx];
           viewData.push({
             value: data[rowIdx][colIdx],
-            top: rowIdx * CELL_HEIGHT,
+            top,
             left,
             row: rowIdx,
             col: colIdx,
             width,
-            height: CELL_HEIGHT + 1
+            height
           });
         }
       }
@@ -79,6 +119,8 @@ export const dataViewSelector = createSelector(
 
     return {
       viewData,
+      columnHeaders,
+      rowHeaders,
       dataHeight,
       dataWidth
     };

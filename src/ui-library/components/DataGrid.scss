@@ -1,8 +1,8 @@
-$column-header-height: 30px;
-$row-header-width: 60px;
-
 .grid {
   position: relative;
+
+  --column-header-height: 30px;
+  --row-header-width: 60px;
 
   > div:nth-of-type(1) {
     position: absolute;
@@ -13,27 +13,27 @@ $row-header-width: 60px;
     overflow: scroll;
     > div {
       position: relative;
-      margin-top: $column-header-height;
-      margin-left: $row-header-width;
+      margin-top: var(--column-header-height);
+      margin-left: var(--row-header-width);
     }
   }
 
   > div:nth-of-type(2) {
     position: absolute;
     top: 0;
-    left: 0;
-    width: calc(100% - 1rem);
-    height: $column-header-height;
+    left: var(--row-header-width);
+    width: calc(100% - 1rem - var(--row-header-width));
+    height: var(--column-header-height);
     background-color: #eee;
     overflow: hidden;
   }
 
   > div:nth-of-type(3) {
     position: absolute;
-    top: 0;
+    top: var(--column-header-height);
     left: 0;
-    width: $row-header-width;
-    height: calc(100% - 1rem);
+    width: var(--row-header-width);
+    height: calc(100% - 1rem - var(--column-header-height));
     background-color: #eee;
     overflow: hidden;
   }
