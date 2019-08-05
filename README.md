@@ -1,7 +1,7 @@
 # Redux in Web Worker Example
 
-This project builds a reasonably complex React/Redux application which
-manages a grid of data.
+This project is an experiment that builds a reasonably complex React/Redux
+application which manages a grid of data.
 
 Two versions of the application are used. The first version does all of
 its processing on the UI thread. The second version moves the entire Redux
