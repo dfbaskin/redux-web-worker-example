@@ -3,6 +3,9 @@
 This project is an experiment that builds a reasonably complex React/Redux
 application which manages a grid of data.
 
+Application is here:
+[https://dfbaskin.github.io/redux-web-worker-example/](https://dfbaskin.github.io/redux-web-worker-example/)
+
 Two versions of the application are used. The first version does all of
 its processing on the UI thread. The second version moves the entire Redux
 store to a web worker and then uses Reselect selectors to pull data
