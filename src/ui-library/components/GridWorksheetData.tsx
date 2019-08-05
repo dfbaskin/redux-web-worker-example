@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { useStateSelector, WithSelector } from "../hooks/useStateSelector";
-import { dataViewSelector } from "../../state-library/selectors/dataViewSelector";
+import { dataViewSelector } from "../../state-library/selectors";
 import { useWindowReisze } from "../hooks/useWindowResize";
 import { AppStoreContext } from "../../state-library/AppStoreContext";
 import {
