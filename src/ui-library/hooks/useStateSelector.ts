@@ -3,7 +3,7 @@ import { AppStoreContext } from "../../state-library/AppStoreContext";
 import { Selectors, WithSelector } from "../../state-library/selectors";
 
 export function useStateSelector<T>(
-  chooseSelector: (selectors: Selectors) => () => T
+  chooseSelector: (selector: Selectors) => () => T
 ): T | undefined {
   const [currentState, setCurrentState] = useState<T | undefined>();
   const { selectors, subscribe } = useContext(AppStoreContext);

@@ -2678,10 +2678,10 @@ ignore@^5.1.1:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.2.tgz#e28e584d43ad7e92f96995019cc43b9e1ac49558"
   integrity sha512-vdqWBp7MyzdmHkkRWV5nY+PfGRbYbahfuvsBCh277tq+w9zyNi7h5CYJCK0kmzti9kU+O/cB7sE8HvKv6aXAKQ==
 
-immer@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-3.1.3.tgz#59bc742b2aab6e2c676445edb653e588a23c70fc"
-  integrity sha512-HG5SXTXTTVy9lGNwS075cNhQoV375jHsIJO3UtMjuUWJOuwlMr0u42FlsKTJcppt5AzsFAsmj9r4kHvsSHh3hQ==
+immer@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-3.2.0.tgz#53686471e9dd2b070e0fb5500c6fdecd3a99375f"
+  integrity sha512-+a2R8z9eELHst6aht++nzVzJ8LJ+Hsg49qttfg9Kc/vmoxEdPXw5/rV6+4DYWGgnq+B36KbLr4OTaGtS9mDjtg==
 
 import-cwd@^2.0.0, import-cwd@^2.1.0:
   version "2.1.0"
@@ -5134,10 +5134,10 @@ rollup-plugin-cleaner@^1.0.0:
   dependencies:
     rimraf "^2.6.3"
 
-rollup-plugin-commonjs@^10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-10.0.1.tgz#fbfcadf4ce2e826068e056a9f5c19287d9744ddf"
-  integrity sha512-x0PcCVdEc4J8igv1qe2vttz8JKAKcTs3wfIA3L8xEty3VzxgORLrzZrNWaVMc+pBC4U3aDOb9BnWLAQ8J11vkA==
+rollup-plugin-commonjs@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-10.0.2.tgz#61328f3a29945e2c35f2b2e824c18944fd88a54d"
+  integrity sha512-DxeR4QXTgTOFseYls1V7vgKbrSJmPYNdEMOs0OvH+7+89C3GiIonU9gFrE0u39Vv1KWm3wepq8KAvKugtoM2Zw==
   dependencies:
     estree-walker "^0.6.1"
     is-reference "^1.1.2"

@@ -17,40 +17,70 @@ export const dataViewSelector = createSelector(
   stateSelector,
   state => {
     const { columns, data, scrollTop, scrollLeft, height, width } = state;
-    const { lefts } = columns.reduce(
+
+    const dataHeight = data.length * CELL_HEIGHT;
+    const { bounds, dataWidth } = columns.reduce(
       (acc, { width }) => {
-        acc.lefts.push(acc.totalWidth);
-        acc.totalWidth += width;
+        acc.bounds.push({
+          width: width + 1,
+          left: acc.dataWidth,
+          right: acc.dataWidth + width
+        });
+        acc.dataWidth += width;
         return acc;
       },
       {
-        lefts: [] as number[],
-        totalWidth: 0
+        bounds: [] as {
+          width: number;
+          left: number;
+          right: number;
+        }[],
+        dataWidth: 0
       }
     );
-    const viewData: CellDetails[] = [];
 
-    const rowCount = 10,
-      rowStart = 0,
-      colCount = 7,
-      colStart = 0;
-    const rowEnd = Math.min(rowStart + rowCount, data.length);
-    for (let rowIdx = rowStart; rowIdx < rowEnd; rowIdx++) {
-      const colEnd = Math.min(colStart + colCount, data[rowIdx].length);
-      for (let colIdx = colStart; colIdx < colEnd; colIdx++) {
-        viewData.push({
-          value: data[rowIdx][colIdx],
-          top: rowIdx * CELL_HEIGHT,
-          left: lefts[colIdx],
-          row: rowIdx,
-          col: colIdx,
-          width: columns[colIdx].width + 1,
-          height: CELL_HEIGHT + 1
-        });
+    const rowStart = Math.floor(scrollTop / CELL_HEIGHT);
+    const rowCount = Math.ceil(height / CELL_HEIGHT);
+    const { colStart, colCount } = bounds.reduce(
+      (acc, { left, right }, idx) => {
+        if (left <= scrollLeft + width && scrollLeft <= right) {
+          if (acc.colStart === -1) {
+            acc.colStart = idx;
+          }
+          acc.colCount += 1;
+        }
+        return acc;
+      },
+      {
+        colStart: -1,
+        colCount: 0
+      }
+    );
+
+    const viewData: CellDetails[] = [];
+    if (colStart !== -1) {
+      const rowEnd = Math.min(rowStart + rowCount, data.length);
+      for (let rowIdx = rowStart; rowIdx < rowEnd; rowIdx++) {
+        const colEnd = Math.min(colStart + colCount, bounds.length);
+        for (let colIdx = colStart; colIdx < colEnd; colIdx++) {
+          const { left, width } = bounds[colIdx];
+          viewData.push({
+            value: data[rowIdx][colIdx],
+            top: rowIdx * CELL_HEIGHT,
+            left,
+            row: rowIdx,
+            col: colIdx,
+            width,
+            height: CELL_HEIGHT + 1
+          });
+        }
       }
     }
+
     return {
-      viewData
+      viewData,
+      dataHeight,
+      dataWidth
     };
   }
 );
