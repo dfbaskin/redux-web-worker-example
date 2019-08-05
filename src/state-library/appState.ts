@@ -10,6 +10,7 @@ export interface ApplicationState {
   height: number;
   scrollLeft: number;
   scrollTop: number;
+  usedColumnCount: number;
 }
 
 export const initialState: ApplicationState = {
@@ -18,5 +19,6 @@ export const initialState: ApplicationState = {
   width: 100,
   height: 100,
   scrollLeft: 0,
-  scrollTop: 0
+  scrollTop: 0,
+  usedColumnCount: 0
 };

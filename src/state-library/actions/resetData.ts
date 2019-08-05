@@ -29,6 +29,7 @@ export function resetDataReducer(
   let { rows, cols } = action.payload;
 
   draft.columns = [];
+  draft.usedColumnCount = defaultData.length;
   for (const [width] of defaultData) {
     const idx = draft.columns.length + 1;
     draft.columns.push({

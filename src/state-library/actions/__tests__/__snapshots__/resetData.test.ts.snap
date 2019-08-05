@@ -17,13 +17,14 @@ Object {
     },
     Object {
       "id": "C4",
-      "width": 80,
+      "width": 100,
     },
     Object {
       "id": "C5",
-      "width": 80,
+      "width": 150,
     },
   ],
   "data": Array [],
+  "usedColumnCount": 5,
 }
 `;
