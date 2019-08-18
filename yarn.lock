@@ -5025,6 +5025,11 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
+redux-in-worker@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/redux-in-worker/-/redux-in-worker-0.3.0.tgz#7f5c2dc6f28fd305c4ee7d85013ed2299297eeb1"
+  integrity sha512-jYVZEnXBXhQslHsFG9iTMIt3/dVjudWAk/U2dDFWKhZTRfq/IH+xIcQO9aNhSwfdu8vYGnMMhzUKH2gyW8gxkg==
+
 redux@*, redux@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
