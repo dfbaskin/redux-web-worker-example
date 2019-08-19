@@ -6,6 +6,7 @@ export interface ColumnDefinition {
 export interface ApplicationState {
   columns: ColumnDefinition[];
   data: any[][];
+  formulas: (string | null)[];
   width: number;
   height: number;
   scrollLeft: number;
@@ -16,6 +17,7 @@ export interface ApplicationState {
 export const initialState: ApplicationState = {
   columns: [],
   data: [],
+  formulas: [],
   width: 100,
   height: 100,
   scrollLeft: 0,
