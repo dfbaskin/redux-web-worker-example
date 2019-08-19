@@ -17,7 +17,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "redux": "^4.0.4",
-    "redux-in-worker": "^0.3.0",
+    "redux-in-worker": "^0.4.0",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
@@ -30,7 +30,6 @@
     "@types/jest": "^24.0.16",
     "@types/react": "^16.8.24",
     "@types/react-dom": "^16.8.5",
-    "@types/redux": "^3.6.0",
     "babel-jest": "^24.8.0",
     "fs-extra": "^8.1.0",
     "gh-pages": "^2.1.0",
