@@ -3,11 +3,18 @@ import { math } from "./mathCore";
 export function applyFormula(formula: string, data: any[][]): any[] {
   const result: any[] = [];
   const scope = createScope(data);
-  const parsed = math.compile!(formula);
-  for (let row = 0; row < data.length; row++) {
-    setScopeRow(scope, row);
-    const value = parsed.evaluate(scope);
-    result.push(value);
+  try {
+    const parsed = math.compile!(formula);
+    for (let row = 0; row < data.length; row++) {
+      setScopeRow(scope, row);
+      const value = parsed.evaluate(scope);
+      result.push(value);
+    }
+  } catch (err) {
+    const errTxt = err.message || err.toString();
+    for (let row = 0; row < data.length; row++) {
+      result[row] = errTxt;
+    }
   }
   return result;
 }

@@ -9,11 +9,13 @@ export const currentFormulaSelector = createSelector(
     return selectedColumnIndex === undefined
       ? {
           formula: "",
-          columnId: ""
+          columnId: "",
+          columnIndex: -1
         }
       : {
           formula: formulas[selectedColumnIndex] || "",
-          columnId: `C${selectedColumnIndex + 1}`
+          columnId: `C${selectedColumnIndex + 1}`,
+          columnIndex: selectedColumnIndex
         };
   }
 );

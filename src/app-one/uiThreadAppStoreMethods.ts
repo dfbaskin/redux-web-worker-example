@@ -1,5 +1,4 @@
 import { AppStoreMethods } from "../state-library/AppStoreContext";
-import { Action } from "../state-library/common";
 import { store } from "../state-library/appStore";
 import {
   allDataSelector,
@@ -13,7 +12,7 @@ export const appStoreMethods: AppStoreMethods = {
     dataViewSelector: () => dataViewSelector(store.getState()),
     currentFormulaSelector: () => currentFormulaSelector(store.getState())
   },
-  dispatch(action: Action) {
+  dispatch(action: any) {
     store.dispatch(action);
   },
   subscribe<T>(selector: () => T, callback: (data: T) => void) {

@@ -1,5 +1,9 @@
 import { PayloadAction, payloadActionCreator } from "../common";
 import { ApplicationState } from "../appState";
+import { Dispatch } from "redux";
+import { clearDataAction } from "./clearData";
+import { applyFormulaAction, applyFormulaResultAction } from "./applyFormula";
+import { applyFormula } from "../math/mathEngine";
 
 interface DefaultColumn {
   width?: number;
@@ -94,4 +98,57 @@ export function resetDataReducer(
     }
     draft.data.push(dataRow);
   }
+}
+
+export enum DataSizes {
+  Small,
+  Medium,
+  Large
+}
+
+export function resetDataToSizeAction(dataSize: DataSizes) {
+  return (dispatch: Dispatch, getState: () => ApplicationState) => {
+    dispatch(clearDataAction());
+    switch (dataSize) {
+      case DataSizes.Small:
+      default:
+        dispatch(
+          resetDataAction({
+            rows: 50,
+            cols: 50
+          })
+        );
+        break;
+      case DataSizes.Medium:
+        dispatch(
+          resetDataAction({
+            rows: 1000,
+            cols: 700
+          })
+        );
+        break;
+      case DataSizes.Large:
+        dispatch(
+          resetDataAction({
+            rows: 10000,
+            cols: 4000
+          })
+        );
+        break;
+    }
+    for (let idx = 0; idx < defaultColumns.length; idx++) {
+      const { formula } = defaultColumns[idx];
+      if (formula) {
+        const { data } = getState();
+        const updatedData = applyFormula(formula, data);
+        dispatch(
+          applyFormulaResultAction({
+            columnIndex: idx,
+            formula,
+            updatedData
+          })
+        );
+      }
+    }
+  };
 }
