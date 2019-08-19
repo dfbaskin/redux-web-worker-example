@@ -7,6 +7,12 @@
   "scripts": {
     "build": "rollup --config rollup.config.js",
     "build:watch": "rollup --config rollup.config.js --watch",
+    "build:one": "rollup --config rollup.one.config.js",
+    "build:one:watch": "rollup --config rollup.one.config.js --watch",
+    "build:two": "rollup --config rollup.two.config.js",
+    "build:two:watch": "rollup --config rollup.two.config.js --watch",
+    "build:three": "rollup --config rollup.three.config.js",
+    "build:three:watch": "rollup --config rollup.three.config.js --watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "deploy": "gh-pages -d build"
