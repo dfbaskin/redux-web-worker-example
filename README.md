@@ -3,13 +3,19 @@
 This project is an experiment that builds a reasonably complex React/Redux
 application which manages a grid of data.
 
-Application is here:
+The application can be used here:
 [https://dfbaskin.github.io/redux-web-worker-example/](https://dfbaskin.github.io/redux-web-worker-example/)
 
-Two versions of the application are used. The first version does all of
-its processing on the UI thread. The second version moves the entire Redux
-store to a web worker and then uses Reselect selectors to pull data
-from the web worker into the main UI thread.
+Three versions of the application are provided.
+
+1.  Version One - all processing is on the UI thread (no web worker is used).
+
+1.  Version Two - the entire Redux store is on a worker thread and
+    [Reselect](https://github.com/reduxjs/reselect) selectors are used to
+    move data from the web worker as needed.
+
+1.  Version Three - uses the [redux-in-worker](https://github.com/dai-shi/redux-in-worker)
+    package to manage the redux store (this version provided by [Daishi Kato](https://github.com/dai-shi)).
 
 # Resources
 
