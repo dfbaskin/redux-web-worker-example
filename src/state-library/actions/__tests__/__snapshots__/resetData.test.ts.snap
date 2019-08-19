@@ -50,6 +50,7 @@ Object {
   "height": 100,
   "scrollLeft": 0,
   "scrollTop": 0,
+  "selectedColumnIndex": 5,
   "usedColumnCount": 8,
   "width": 100,
 }

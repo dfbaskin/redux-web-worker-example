@@ -12,6 +12,7 @@ export interface CellDetails {
   col: number;
   width: number;
   height: number;
+  isColumnSelected: boolean;
 }
 
 export interface ColumnHeaderDetails {
@@ -20,6 +21,7 @@ export interface ColumnHeaderDetails {
   col: number;
   width: number;
   height: number;
+  isColumnSelected: boolean;
 }
 
 export interface RowHeaderDetails {
@@ -33,7 +35,15 @@ export interface RowHeaderDetails {
 export const dataViewSelector = createSelector(
   stateSelector,
   state => {
-    const { columns, data, scrollTop, scrollLeft, height, width } = state;
+    const {
+      columns,
+      data,
+      scrollTop,
+      scrollLeft,
+      height,
+      width,
+      selectedColumnIndex
+    } = state;
 
     const dataHeight = data.length * CELL_HEIGHT;
     const { bounds, dataWidth } = columns.reduce(
@@ -98,7 +108,8 @@ export const dataViewSelector = createSelector(
               left: left - scrollLeft,
               col: colIdx,
               width,
-              height: CELL_HEIGHT
+              height: CELL_HEIGHT,
+              isColumnSelected: colIdx === selectedColumnIndex
             });
           }
         }
@@ -111,7 +122,8 @@ export const dataViewSelector = createSelector(
             row: rowIdx,
             col: colIdx,
             width,
-            height
+            height,
+            isColumnSelected: colIdx === selectedColumnIndex
           });
         }
       }

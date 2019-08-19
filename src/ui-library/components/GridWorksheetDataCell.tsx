@@ -5,6 +5,7 @@ interface Props {
   left: number;
   width: number;
   height: number;
+  isColumnSelected: boolean;
   value: any;
 }
 
@@ -13,6 +14,7 @@ export function GridWorksheetDataCell({
   left,
   width,
   height,
+  isColumnSelected,
   value
 }: Props) {
   const displayValue =
@@ -23,7 +25,7 @@ export function GridWorksheetDataCell({
       : value;
   return (
     <div
-      className="cell"
+      className={isColumnSelected ? "cell selected" : "cell"}
       style={{
         top,
         left,

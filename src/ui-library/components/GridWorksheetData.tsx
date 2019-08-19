@@ -32,16 +32,19 @@ export function GridWorksheetData({ viewData, dataWidth, dataHeight }: Props) {
   return (
     <div ref={divRef} onScroll={onScroll}>
       <div style={{ width: dataWidth, height: dataHeight }}>
-        {viewData.map(({ row, col, top, left, width, height, value }) => (
-          <GridWorksheetDataCell
-            key={`${row}-${col}`}
-            top={top}
-            left={left}
-            width={width}
-            height={height}
-            value={value}
-          />
-        ))}
+        {viewData.map(
+          ({ row, col, top, left, width, height, isColumnSelected, value }) => (
+            <GridWorksheetDataCell
+              key={`${row}-${col}`}
+              top={top}
+              left={left}
+              width={width}
+              height={height}
+              isColumnSelected={isColumnSelected}
+              value={value}
+            />
+          )
+        )}
       </div>
     </div>
   );
