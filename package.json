@@ -14,6 +14,7 @@
   "dependencies": {
     "comlink": "^4.0.2",
     "immer": "^3.2.0",
+    "mathjs": "^6.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "redux": "^4.0.4",
@@ -28,6 +29,7 @@
     "@surma/rollup-plugin-off-main-thread": "^1.1.1",
     "@types/faker": "^4.1.5",
     "@types/jest": "^24.0.16",
+    "@types/mathjs": "^6.0.1",
     "@types/react": "^16.8.24",
     "@types/react-dom": "^16.8.5",
     "babel-jest": "^24.8.0",
