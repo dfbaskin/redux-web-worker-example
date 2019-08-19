@@ -5021,6 +5021,11 @@ redux-in-worker@^0.4.0:
   resolved "https://registry.yarnpkg.com/redux-in-worker/-/redux-in-worker-0.4.0.tgz#3a7a06f9ea54d1952d703a5d195bc0cd42da7d14"
   integrity sha512-m8sFQnCoO2BNx2cQPwuF0MOaCBkMXrS5f9NSJ/NZWSSbZQyWzO1ytLT6kdYPK2/0DbKdG1cuPPflsupWVKq5/w==
 
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
+
 redux@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
