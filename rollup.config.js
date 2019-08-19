@@ -94,5 +94,47 @@ export default [
       entryFileNames: "[name].[hash].js",
       format: "amd"
     }
+  },
+  {
+    input: "src/app-three/app-three.tsx",
+    plugins: [
+      resolve(),
+      commonjs({
+        namedExports: {
+          react: [
+            "createContext",
+            "useContext",
+            "useState",
+            "useEffect",
+            "useRef"
+          ]
+        }
+      }),
+      typescript({
+        objectHashIgnoreUnknownHack: false,
+        clean: true
+      }),
+      OMT({
+        workerRegexp: /new Worker\((["'])(.+?)\1[^)]*\)/g
+      }),
+      postcss({
+        plugins: [postcssSass()]
+      }),
+      replace({
+        "process.env.NODE_ENV": JSON.stringify("development")
+      }),
+      copy({
+        targets: [{ src: "src/app-three/app-three.html", dest: "build" }]
+      }),
+      htmlTemplate({
+        template: "src/app-three/app-three.html",
+        target: "build/app-three.html"
+      })
+    ],
+    output: {
+      dir: "build",
+      entryFileNames: "[name].[hash].js",
+      format: "amd"
+    }
   }
 ];
