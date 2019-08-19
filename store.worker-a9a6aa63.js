@@ -80,10 +80,10 @@ if (!self.define) {
     });
   };
 }
-define("./store.worker-c84c503f.js",['./chunk-2feafc53'], function (__chunk_1) { 'use strict';
+define("./store.worker-a9a6aa63.js",['./index-9e39ae10'], function (index) { 'use strict';
 
-	const store = __chunk_1.createStore(__chunk_1.reducer);
+	const store = index.createStore(index.reducer);
 
-	__chunk_1.exposeStore(store);
+	index.exposeStore(store);
 
 });

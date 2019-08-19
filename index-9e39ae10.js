@@ -1,4 +1,4 @@
-define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
+define("./index-9e39ae10.js",['exports'], function (exports) { 'use strict';
 
 	function symbolObservablePonyfill(root) {
 		var result;
@@ -365,54 +365,6 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 
 	}
 
-	function _defineProperty(obj, key, value) {
-	  if (key in obj) {
-	    Object.defineProperty(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-
-	  return obj;
-	}
-
-	function ownKeys(object, enumerableOnly) {
-	  var keys = Object.keys(object);
-
-	  if (Object.getOwnPropertySymbols) {
-	    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
-	  }
-
-	  if (enumerableOnly) keys = keys.filter(function (sym) {
-	    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-	  });
-	  return keys;
-	}
-
-	function _objectSpread2(target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i] != null ? arguments[i] : {};
-
-	    if (i % 2) {
-	      ownKeys(source, true).forEach(function (key) {
-	        _defineProperty(target, key, source[key]);
-	      });
-	    } else if (Object.getOwnPropertyDescriptors) {
-	      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-	    } else {
-	      ownKeys(source).forEach(function (key) {
-	        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-	      });
-	    }
-	  }
-
-	  return target;
-	}
-
 	/**
 	 * Composes single-argument functions from right to left. The rightmost
 	 * function can take multiple arguments as it provides the signature for
@@ -443,53 +395,6 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 	      return a(b.apply(void 0, arguments));
 	    };
 	  });
-	}
-
-	/**
-	 * Creates a store enhancer that applies middleware to the dispatch method
-	 * of the Redux store. This is handy for a variety of tasks, such as expressing
-	 * asynchronous actions in a concise manner, or logging every action payload.
-	 *
-	 * See `redux-thunk` package as an example of the Redux middleware.
-	 *
-	 * Because middleware is potentially asynchronous, this should be the first
-	 * store enhancer in the composition chain.
-	 *
-	 * Note that each middleware will be given the `dispatch` and `getState` functions
-	 * as named arguments.
-	 *
-	 * @param {...Function} middlewares The middleware chain to be applied.
-	 * @returns {Function} A store enhancer applying the middleware.
-	 */
-
-	function applyMiddleware() {
-	  for (var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++) {
-	    middlewares[_key] = arguments[_key];
-	  }
-
-	  return function (createStore) {
-	    return function () {
-	      var store = createStore.apply(void 0, arguments);
-
-	      var _dispatch = function dispatch() {
-	        throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
-	      };
-
-	      var middlewareAPI = {
-	        getState: store.getState,
-	        dispatch: function dispatch() {
-	          return _dispatch.apply(void 0, arguments);
-	        }
-	      };
-	      var chain = middlewares.map(function (middleware) {
-	        return middleware(middlewareAPI);
-	      });
-	      _dispatch = compose.apply(void 0, chain)(store.dispatch);
-	      return _objectSpread2({}, store, {
-	        dispatch: _dispatch
-	      });
-	    };
-	  };
 	}
 
 	/*
@@ -535,24 +440,22 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 	  return state;
 	};
 
-	const REPLACE_STATE = Symbol('REPLACE_STATE');
-	const reducer = (state = {}, action) => {
-	  if (action.type === REPLACE_STATE) {
-	    return action.state;
-	  }
-	  return state;
-	};
-
-	const wrapStore = (worker, initialState) => {
-	  const middleware = () => next => (action) => {
-	    if (action.type !== REPLACE_STATE) {
-	      worker.postMessage(action);
-	    }
-	    next(action);
+	const applyWorker = worker => createStoreOrig => (reducer, ...rest) => {
+	  const REPLACE_STATE = Symbol('REPLACE_STATE');
+	  const wrappedReducer = (state, action) => {
+	    if (action.type === REPLACE_STATE) return action.state;
+	    return reducer(state, action);
 	  };
-	  const store = createStore(reducer, initialState, applyMiddleware(middleware));
+	  const store = createStoreOrig(wrappedReducer, ...rest);
+	  const dispatch = (action) => {
+	    if (typeof action.type === 'string') {
+	      worker.postMessage(action);
+	    } else {
+	      store.dispatch(action);
+	    }
+	  };
 	  worker.onmessage = (e) => {
-	    const state = applyPatches(store.getState, e.data);
+	    const state = applyPatches(store.getState(), e.data);
 	    store.dispatch({ type: REPLACE_STATE, state });
 	  };
 	  worker.onerror = () => {
@@ -561,6 +464,18 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 	  worker.onmessageerror = () => {
 	    console.error('wrapStore worker message error');
 	  };
+	  return {
+	    ...store,
+	    dispatch,
+	  };
+	};
+
+	const wrapStore = (worker, initialState, enhancer) => {
+	  const store = createStore(
+	    state => state, // pass through reducer
+	    initialState,
+	    compose(applyWorker(worker), enhancer || (x => x)),
+	  );
 	  return store;
 	};
 
@@ -644,7 +559,10 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 
 	const exposeStore = (store) => {
 	  self.onmessage = (e) => {
-	    store.dispatch(e.data);
+	    const action = e.data;
+	    if (typeof action.type === 'string') {
+	      store.dispatch(action);
+	    }
 	  };
 	  const listener = () => {
 	    const patches = createPatches(store.getState());
@@ -687,13 +605,13 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 
 	  return target;
 	};
-	var ownKeys$1 = typeof Reflect !== "undefined" && Reflect.ownKeys ? Reflect.ownKeys : typeof Object.getOwnPropertySymbols !== "undefined" ? function (obj) { return Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertySymbols(obj)); } : Object.getOwnPropertyNames;
+	var ownKeys = typeof Reflect !== "undefined" && Reflect.ownKeys ? Reflect.ownKeys : typeof Object.getOwnPropertySymbols !== "undefined" ? function (obj) { return Object.getOwnPropertyNames(obj).concat(Object.getOwnPropertySymbols(obj)); } : Object.getOwnPropertyNames;
 	function shallowCopy(base, invokeGetters) {
 	  if ( invokeGetters === void 0 ) invokeGetters = false;
 
 	  if (Array.isArray(base)) { return base.slice(); }
 	  var clone = Object.create(Object.getPrototypeOf(base));
-	  ownKeys$1(base).forEach(function (key) {
+	  ownKeys(base).forEach(function (key) {
 	    if (key === DRAFT_STATE) {
 	      return; // Never copy over draft state.
 	    }
@@ -725,7 +643,7 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 	  if (Array.isArray(value)) {
 	    for (var i = 0; i < value.length; i++) { cb(i, value[i], value); }
 	  } else {
-	    ownKeys$1(value).forEach(function (key) { return cb(key, value[key], value); });
+	    ownKeys(value).forEach(function (key) { return cb(key, value[key], value); });
 	  }
 	}
 	function isEnumerable(base, prop) {
@@ -1897,7 +1815,7 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 	    }
 	}
 
-	const reducer$1 = createReducer([
+	const reducer = createReducer([
 	    [resetDataAction, resetDataReducer],
 	    [setGridSizeAction, setGridSizeReducer],
 	    [setGridScrollAction, setGridScrollReducer],
@@ -1907,7 +1825,7 @@ define("./chunk-2feafc53.js",['exports'], function (exports) { 'use strict';
 	exports.addRandomDataColumnAction = addRandomDataColumnAction;
 	exports.createStore = createStore;
 	exports.exposeStore = exposeStore;
-	exports.reducer = reducer$1;
+	exports.reducer = reducer;
 	exports.resetDataAction = resetDataAction;
 	exports.setGridScrollAction = setGridScrollAction;
 	exports.setGridSizeAction = setGridSizeAction;

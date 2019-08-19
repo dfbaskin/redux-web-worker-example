@@ -80,7 +80,7 @@ if (!self.define) {
     });
   };
 }
-define("./worker-2e2c4ae3.js",['./chunk-fd141924'], function (__chunk_1) { 'use strict';
+define("./worker-cffc6525.js",['./comlink-fd141924'], function (comlink) { 'use strict';
 
 	function symbolObservablePonyfill(root) {
 		var result;
@@ -458,12 +458,12 @@ define("./worker-2e2c4ae3.js",['./chunk-fd141924'], function (__chunk_1) { 'use 
 	  warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
 	}
 
-	const store = createStore(__chunk_1.reducer);
+	const store = createStore(comlink.reducer);
 
 	const workerMethods = {
 	    selectors: {
-	        allDataSelector: selectState(__chunk_1.allDataSelector),
-	        dataViewSelector: selectState(__chunk_1.dataViewSelector)
+	        allDataSelector: selectState(comlink.allDataSelector),
+	        dataViewSelector: selectState(comlink.dataViewSelector)
 	    },
 	    dispatch(action) {
 	        store.dispatch(action);
@@ -474,7 +474,7 @@ define("./worker-2e2c4ae3.js",['./chunk-fd141924'], function (__chunk_1) { 'use 
 	        });
 	    }
 	};
-	__chunk_1.expose(workerMethods);
+	comlink.expose(workerMethods);
 	// Only return selected state if it has actually changed (so it doesn't
 	// go through serialization/deserializaton process).
 	function selectState(selector) {
