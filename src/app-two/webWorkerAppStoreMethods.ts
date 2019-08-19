@@ -1,6 +1,10 @@
 import { AppStoreMethods } from "../state-library/AppStoreContext";
 import { Action } from "../state-library/common";
-import { allDataSelector, dataViewSelector } from "../state-library/selectors";
+import {
+  allDataSelector,
+  currentFormulaSelector,
+  dataViewSelector
+} from "../state-library/selectors";
 import { initialState } from "../state-library/appState";
 import { proxy, wrap } from "comlink";
 
@@ -22,7 +26,8 @@ export function initializeWorker(): AppStoreMethods {
   return {
     selectors: {
       allDataSelector: () => allDataSelector(initialState),
-      dataViewSelector: () => dataViewSelector(initialState)
+      dataViewSelector: () => dataViewSelector(initialState),
+      currentFormulaSelector: () => currentFormulaSelector(initialState)
     },
     async dispatch(action: Action) {
       await workerProxy.dispatch(action);

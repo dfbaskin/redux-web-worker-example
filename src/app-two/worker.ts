@@ -1,13 +1,18 @@
 import { Action } from "../state-library/common";
 import { store } from "../state-library/appStore";
-import { allDataSelector, dataViewSelector } from "../state-library/selectors";
+import {
+  allDataSelector,
+  dataViewSelector,
+  currentFormulaSelector
+} from "../state-library/selectors";
 import { expose } from "comlink";
 import { ApplicationState } from "../state-library/appState";
 
 const workerMethods = {
   selectors: {
     allDataSelector: selectState(allDataSelector),
-    dataViewSelector: selectState(dataViewSelector)
+    dataViewSelector: selectState(dataViewSelector),
+    currentFormulaSelector: selectState(currentFormulaSelector)
   },
   dispatch(action: Action) {
     store.dispatch(action);
