@@ -115,8 +115,19 @@ export const dataViewSelector = createSelector(
         }
         for (let colIdx = colStart; colIdx < colEnd; colIdx++) {
           const { left, width } = bounds[colIdx];
+          let value = data[rowIdx][colIdx];
+          if (
+            value !== undefined &&
+            value !== null &&
+            typeof value === "object"
+          ) {
+            value = {
+              type: "mathjs",
+              serialized: JSON.stringify(value)
+            };
+          }
           viewData.push({
-            value: data[rowIdx][colIdx],
+            value,
             top,
             left,
             row: rowIdx,
