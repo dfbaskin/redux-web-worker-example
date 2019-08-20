@@ -2,11 +2,12 @@ import { ApplicationState, initialState } from "../appState";
 import { createReducer } from "../common";
 
 import { clearDataAction, clearDataReducer } from "./clearData";
+import { resetDataAction, resetDataReducer } from "./resetData";
 import {
-  resetDataToSizeAction,
-  resetDataAction,
-  resetDataReducer
-} from "./resetData";
+  DataSizes,
+  resetExampleDataAction,
+  resetExampleDataEpic
+} from "./resetExampleData";
 import { setGridSizeAction, setGridSizeReducer } from "./setGridSize";
 import { setGridScrollAction, setGridScrollReducer } from "./setGridScroll";
 import {
@@ -18,12 +19,13 @@ import {
   addRandomDataColumnReducer
 } from "./addRandomDataColumn";
 import {
-  applyFormulaAction,
   applyFormulaResultAction,
   applyFormulaResultReducer
-} from "./applyFormula";
+} from "./applyFormulaResult";
+import { applyFormulaAction, applyFormulaEpic } from "./applyFormula";
+import { combineEpics } from "redux-observable";
 
-const reducer = createReducer<ApplicationState>(
+const rootReducer = createReducer<ApplicationState>(
   [
     [clearDataAction, clearDataReducer],
     [resetDataAction, resetDataReducer],
@@ -36,15 +38,19 @@ const reducer = createReducer<ApplicationState>(
   initialState
 );
 
+const rootEpic = combineEpics(resetExampleDataEpic, applyFormulaEpic);
+
 export {
+  DataSizes,
   clearDataAction,
-  resetDataToSizeAction,
   resetDataAction,
+  resetExampleDataAction,
   setGridSizeAction,
   setGridScrollAction,
   setGridSelectedColumnAction,
   addRandomDataColumnAction,
   applyFormulaAction,
   applyFormulaResultAction,
-  reducer
+  rootReducer,
+  rootEpic
 };

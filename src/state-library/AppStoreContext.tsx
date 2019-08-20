@@ -1,12 +1,11 @@
 import React, { createContext } from "react";
 import { Selectors } from "./selectors";
 import { ApplicationState } from "./appState";
-import { ThunkDispatch } from "redux-thunk";
 import { Action } from "redux";
 
 export interface AppStoreMethods {
   selectors: Selectors;
-  dispatch: ThunkDispatch<ApplicationState, undefined, Action<any>>;
+  dispatch: (action: Action) => void;
   subscribe<T>(
     selector: () => T,
     callback: (data: T) => void

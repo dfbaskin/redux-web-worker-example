@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { AppStoreContext } from "../../state-library/AppStoreContext";
-import { resetDataToSizeAction } from "../../state-library/actions";
-import { DataSizes } from "../../state-library/actions/resetData";
+import { DataSizes, resetExampleDataAction } from "../../state-library/actions";
 
 import "./Header.scss";
 
@@ -17,11 +16,6 @@ interface Props {
 
 export function Header({ title }: Props) {
   const { dispatch } = useContext(AppStoreContext);
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(resetDataToSizeAction(DataSizes.Small));
-    });
-  }, []);
   return (
     <div className="app-header">
       <div>{title}</div>
@@ -29,7 +23,13 @@ export function Header({ title }: Props) {
         {sizes.map(([name, size]) => (
           <button
             type="button"
-            onClick={() => dispatch(resetDataToSizeAction(size))}
+            onClick={() =>
+              dispatch(
+                resetExampleDataAction({
+                  size
+                })
+              )
+            }
             key={size}
           >
             {name}

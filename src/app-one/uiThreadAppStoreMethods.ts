@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import { AppStoreMethods } from "../state-library/AppStoreContext";
 import { store } from "../state-library/appStore";
 import {
@@ -12,7 +13,7 @@ export const appStoreMethods: AppStoreMethods = {
     dataViewSelector: () => dataViewSelector(store.getState()),
     currentFormulaSelector: () => currentFormulaSelector(store.getState())
   },
-  dispatch(action: any) {
+  dispatch(action: Action) {
     store.dispatch(action);
   },
   subscribe<T>(selector: () => T, callback: (data: T) => void) {

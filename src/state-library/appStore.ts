@@ -1,11 +1,12 @@
 import { ApplicationState } from "./appState";
-import { reducer } from "./actions";
+import { rootReducer, rootEpic } from "./actions";
 import { Action, applyMiddleware, createStore } from "redux";
-import thunk, { ThunkMiddleware } from "redux-thunk";
+import { createEpicMiddleware } from "redux-observable";
 
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk as ThunkMiddleware<ApplicationState, Action>)
-);
+const epicMiddleWare = createEpicMiddleware<Action, Action, ApplicationState>();
+
+const store = createStore(rootReducer, applyMiddleware(epicMiddleWare));
+
+epicMiddleWare.run(rootEpic);
 
 export { store };

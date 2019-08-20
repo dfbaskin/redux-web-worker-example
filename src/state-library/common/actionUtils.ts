@@ -1,14 +1,4 @@
-export type ActionType = {
-  type: string;
-  payload?: any;
-  error?: boolean;
-  meta?: any;
-};
-
-export interface Action {
-  type: string;
-  meta?: any;
-}
+import { Action } from "redux";
 
 export interface PayloadAction<T> extends Action {
   payload: T;

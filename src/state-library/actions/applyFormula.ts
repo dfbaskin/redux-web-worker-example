@@ -1,47 +1,39 @@
-import { PayloadAction, payloadActionCreator } from "../common";
+import { payloadActionCreator } from "../common";
 import { ApplicationState } from "../appState";
-import { Dispatch } from "redux";
+import { Action } from "redux";
 import { applyFormula } from "../math/mathEngine";
+import { Observable, of } from "rxjs";
+import { ofType, StateObservable } from "redux-observable";
+import { switchMap, withLatestFrom } from "rxjs/operators";
+import { applyFormulaResultAction } from "./applyFormulaResult";
 
 interface Payload {
-  columnIndex: number; // 0-based
-  formula: string;
-  updatedData: any[];
-}
-
-export const applyFormulaResultAction = payloadActionCreator<Payload>(
-  "APPLY_FORMULA"
-);
-
-export function applyFormulaResultReducer(
-  draft: ApplicationState,
-  action: PayloadAction<Payload>
-): void {
-  const { columnIndex, formula, updatedData } = action.payload;
-  draft.formulas[columnIndex] = formula;
-  for (let row = 0; row < draft.data.length; row++) {
-    draft.data[row][columnIndex] = updatedData[row];
-  }
-}
-
-interface ApplyFormulaPayload {
   columnIndex: number;
   formula: string;
 }
 
-export function applyFormulaAction({
-  columnIndex,
-  formula
-}: ApplyFormulaPayload) {
-  return (dispatch: Dispatch, getState: () => ApplicationState) => {
-    const { data } = getState();
-    const updatedData = applyFormula(formula, data);
-    dispatch(
-      applyFormulaResultAction({
-        columnIndex,
-        formula,
-        updatedData
-      })
-    );
-  };
+export const applyFormulaAction = payloadActionCreator<Payload>(
+  "APPLY_FORMULA"
+);
+
+export function applyFormulaEpic(
+  actionStream: Observable<Action>,
+  stateStream: StateObservable<ApplicationState>
+): Observable<Action> {
+  return actionStream.pipe(
+    ofType(applyFormulaAction),
+    withLatestFrom(stateStream),
+    switchMap(([action, { data }]) => {
+      const { payload } = action as ReturnType<typeof applyFormulaAction>;
+      const { formula, columnIndex } = payload;
+      const updatedData = applyFormula(formula, data);
+      return of(
+        applyFormulaResultAction({
+          columnIndex,
+          formula,
+          updatedData
+        })
+      );
+    })
+  );
 }
