@@ -1,7 +1,6 @@
 import { Action } from "redux";
 import { AppStoreMethods } from "../state-library/AppStoreContext";
 import {
-  allDataSelector,
   currentFormulaSelector,
   dataViewSelector
 } from "../state-library/selectors";
@@ -25,7 +24,6 @@ export function initializeWorker(): AppStoreMethods {
 
   return {
     selectors: {
-      allDataSelector: () => allDataSelector(initialState),
       dataViewSelector: () => dataViewSelector(initialState),
       currentFormulaSelector: () => currentFormulaSelector(initialState)
     },

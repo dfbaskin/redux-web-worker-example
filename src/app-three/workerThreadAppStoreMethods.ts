@@ -3,7 +3,6 @@ import { wrapStore } from "redux-in-worker";
 import { AppStoreMethods } from "../state-library/AppStoreContext";
 import { initialState } from "../state-library/AppState";
 import {
-  allDataSelector,
   currentFormulaSelector,
   dataViewSelector
 } from "../state-library/selectors";
@@ -15,7 +14,6 @@ const store = wrapStore(
 
 export const appStoreMethods: AppStoreMethods = {
   selectors: {
-    allDataSelector: () => allDataSelector(store.getState()),
     dataViewSelector: () => dataViewSelector(store.getState()),
     currentFormulaSelector: () => currentFormulaSelector(store.getState())
   },

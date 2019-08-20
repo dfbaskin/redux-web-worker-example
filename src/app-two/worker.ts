@@ -1,7 +1,6 @@
-import { Action } from "../state-library/common";
+import { Action } from "redux";
 import { store } from "../state-library/appStore";
 import {
-  allDataSelector,
   dataViewSelector,
   currentFormulaSelector
 } from "../state-library/selectors";
@@ -10,7 +9,6 @@ import { ApplicationState } from "../state-library/appState";
 
 const workerMethods = {
   selectors: {
-    allDataSelector: selectState(allDataSelector),
     dataViewSelector: selectState(dataViewSelector),
     currentFormulaSelector: selectState(currentFormulaSelector)
   },
