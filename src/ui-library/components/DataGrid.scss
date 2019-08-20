@@ -4,6 +4,8 @@
   --column-header-height: 30px;
   --row-header-width: 60px;
 
+  background-color: white;
+
   > div:nth-of-type(1) {
     position: absolute;
     top: 0;
@@ -15,6 +17,9 @@
       position: relative;
       margin-top: var(--column-header-height);
       margin-left: var(--row-header-width);
+      .cell.selected {
+        background-color: cornsilk;
+      }
     }
   }
 
@@ -26,6 +31,12 @@
     height: var(--column-header-height);
     background-color: #eee;
     overflow: hidden;
+    .cell {
+      cursor: pointer;
+    }
+    .cell.selected {
+      background-color: wheat;
+    }
   }
 
   > div:nth-of-type(3) {

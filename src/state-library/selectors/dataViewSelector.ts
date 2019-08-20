@@ -12,6 +12,7 @@ export interface CellDetails {
   col: number;
   width: number;
   height: number;
+  isColumnSelected: boolean;
 }
 
 export interface ColumnHeaderDetails {
@@ -20,6 +21,7 @@ export interface ColumnHeaderDetails {
   col: number;
   width: number;
   height: number;
+  isColumnSelected: boolean;
 }
 
 export interface RowHeaderDetails {
@@ -33,7 +35,15 @@ export interface RowHeaderDetails {
 export const dataViewSelector = createSelector(
   stateSelector,
   state => {
-    const { columns, data, scrollTop, scrollLeft, height, width } = state;
+    const {
+      columns,
+      data,
+      scrollTop,
+      scrollLeft,
+      height,
+      width,
+      selectedColumnIndex
+    } = state;
 
     const dataHeight = data.length * CELL_HEIGHT;
     const { bounds, dataWidth } = columns.reduce(
@@ -98,20 +108,33 @@ export const dataViewSelector = createSelector(
               left: left - scrollLeft,
               col: colIdx,
               width,
-              height: CELL_HEIGHT
+              height: CELL_HEIGHT,
+              isColumnSelected: colIdx === selectedColumnIndex
             });
           }
         }
         for (let colIdx = colStart; colIdx < colEnd; colIdx++) {
           const { left, width } = bounds[colIdx];
+          let value = data[rowIdx][colIdx];
+          if (
+            value !== undefined &&
+            value !== null &&
+            typeof value === "object"
+          ) {
+            value = {
+              type: "mathjs",
+              serialized: JSON.stringify(value)
+            };
+          }
           viewData.push({
-            value: data[rowIdx][colIdx],
+            value,
             top,
             left,
             row: rowIdx,
             col: colIdx,
             width,
-            height
+            height,
+            isColumnSelected: colIdx === selectedColumnIndex
           });
         }
       }

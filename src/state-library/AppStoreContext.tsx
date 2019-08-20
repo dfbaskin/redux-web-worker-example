@@ -1,6 +1,7 @@
 import React, { createContext } from "react";
-import { Action } from "./common";
 import { Selectors } from "./selectors";
+import { ApplicationState } from "./appState";
+import { Action } from "redux";
 
 export interface AppStoreMethods {
   selectors: Selectors;

@@ -23,8 +23,35 @@ Object {
       "id": "C5",
       "width": 150,
     },
+    Object {
+      "id": "C6",
+      "width": 100,
+    },
+    Object {
+      "id": "C7",
+      "width": 150,
+    },
+    Object {
+      "id": "C8",
+      "width": 80,
+    },
   ],
   "data": Array [],
-  "usedColumnCount": 5,
+  "formulas": Array [
+    null,
+    null,
+    null,
+    null,
+    null,
+    "C1 + C2 + C3",
+    "C3 mile to km",
+    "mean(C2, C3, C4)",
+  ],
+  "height": 100,
+  "scrollLeft": 0,
+  "scrollTop": 0,
+  "selectedColumnIndex": 5,
+  "usedColumnCount": 8,
+  "width": 100,
 }
 `;

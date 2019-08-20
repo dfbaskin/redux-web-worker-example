@@ -1,9 +1,11 @@
+import { Action } from "redux";
 import { wrapStore } from "redux-in-worker";
-
 import { AppStoreMethods } from "../state-library/AppStoreContext";
 import { initialState } from "../state-library/AppState";
-import { Action } from "../state-library/common";
-import { allDataSelector, dataViewSelector } from "../state-library/selectors";
+import {
+  currentFormulaSelector,
+  dataViewSelector
+} from "../state-library/selectors";
 
 const store = wrapStore(
   new Worker("./store.worker", { type: "module" }),
@@ -12,8 +14,8 @@ const store = wrapStore(
 
 export const appStoreMethods: AppStoreMethods = {
   selectors: {
-    allDataSelector: () => allDataSelector(store.getState()),
-    dataViewSelector: () => dataViewSelector(store.getState())
+    dataViewSelector: () => dataViewSelector(store.getState()),
+    currentFormulaSelector: () => currentFormulaSelector(store.getState())
   },
   dispatch(action: Action) {
     store.dispatch(action);

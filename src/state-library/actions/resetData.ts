@@ -1,9 +1,14 @@
 import { PayloadAction, payloadActionCreator } from "../common";
 import { ApplicationState } from "../appState";
 
-interface Payload {
-  rows: number;
-  cols: number;
+interface DefaultColumnBase {
+  width?: number;
+  value?: (row: number) => any;
+  formula?: string;
+}
+
+interface DefaultColumn extends DefaultColumnBase {
+  columnIndex: number;
 }
 
 const DEFAULT_WIDTH = 80;
@@ -12,13 +17,50 @@ function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const defaultData: [number, (row: number) => any][] = [
-  [50, row => row + 1],
-  [DEFAULT_WIDTH, () => randomBetween(100, 900)],
-  [DEFAULT_WIDTH, () => randomBetween(0, 1000)],
-  [100, () => randomBetween(100000, 999999)],
-  [150, () => Math.random()]
+const baseColumns: DefaultColumnBase[] = [
+  {
+    width: 50,
+    value: row => row + 1
+  },
+  {
+    value: () => randomBetween(100, 900)
+  },
+  {
+    value: () => randomBetween(0, 1000)
+  },
+  {
+    width: 100,
+    value: () => randomBetween(100000, 999999)
+  },
+  {
+    width: 150,
+    value: () => Math.random()
+  },
+  {
+    width: 100,
+    formula: "C1 + C2 + C3"
+  },
+  {
+    width: 150,
+    formula: "C3 mile to km"
+  },
+  {
+    width: 80,
+    formula: "mean(C2, C3, C4)"
+  }
 ];
+
+export const defaultColumns = baseColumns.map(
+  (details, columnIndex): DefaultColumn => ({
+    ...details,
+    columnIndex
+  })
+);
+
+interface Payload {
+  rows: number;
+  cols: number;
+}
 
 export const resetDataAction = payloadActionCreator<Payload>("RESET_DATA");
 
@@ -29,20 +71,24 @@ export function resetDataReducer(
   let { rows, cols } = action.payload;
 
   draft.columns = [];
-  draft.usedColumnCount = defaultData.length;
-  for (const [width] of defaultData) {
+  draft.formulas = [];
+  draft.usedColumnCount = defaultColumns.length;
+
+  for (const column of defaultColumns) {
     const idx = draft.columns.length + 1;
     draft.columns.push({
       id: `C${idx}`,
-      width
+      width: column.width || DEFAULT_WIDTH
     });
+    draft.formulas.push(column.formula || null);
   }
   while (draft.columns.length < cols) {
-    const idx = draft.columns.length;
-    const id = `C${idx + 1}`;
-    const [width] =
-      idx < defaultData.length ? defaultData[idx] : [DEFAULT_WIDTH];
-    draft.columns.push({ id, width });
+    const idx = draft.columns.length + 1;
+    draft.columns.push({
+      id: `C${idx}`,
+      width: DEFAULT_WIDTH
+    });
+    draft.formulas.push(null);
   }
 
   draft.data = [];
@@ -50,9 +96,9 @@ export function resetDataReducer(
     const row = draft.data.length;
     const dataRow: any[] = [];
     for (let idx = 0; idx < cols; idx++) {
-      if (idx < defaultData.length) {
-        const [_, dataFn] = defaultData[idx];
-        dataRow.push(dataFn(row));
+      if (idx < defaultColumns.length) {
+        const { value } = defaultColumns[idx];
+        dataRow.push(value ? value(row) : null);
       } else {
         dataRow.push(null);
       }

@@ -6,6 +6,7 @@ import {
   setGridSizeAction
 } from "../../state-library/actions";
 import { CellDetails } from "../../state-library/selectors/dataViewSelector";
+import { GridWorksheetDataCell } from "./GridWorksheetDataCell";
 
 interface Props {
   viewData: CellDetails[];
@@ -31,22 +32,19 @@ export function GridWorksheetData({ viewData, dataWidth, dataHeight }: Props) {
   return (
     <div ref={divRef} onScroll={onScroll}>
       <div style={{ width: dataWidth, height: dataHeight }}>
-        {viewData.map(({ row, col, top, left, width, height, value }) => {
-          return (
-            <div
-              className="cell"
+        {viewData.map(
+          ({ row, col, top, left, width, height, isColumnSelected, value }) => (
+            <GridWorksheetDataCell
               key={`${row}-${col}`}
-              style={{
-                top,
-                left,
-                width,
-                height
-              }}
-            >
-              {value}
-            </div>
-          );
-        })}
+              top={top}
+              left={left}
+              width={width}
+              height={height}
+              isColumnSelected={isColumnSelected}
+              value={value}
+            />
+          )
+        )}
       </div>
     </div>
   );
