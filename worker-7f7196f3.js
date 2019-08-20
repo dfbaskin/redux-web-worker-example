@@ -80,7 +80,7 @@ if (!self.define) {
     });
   };
 }
-define("./worker-cffc6525.js",['./comlink-fd141924'], function (comlink) { 'use strict';
+define("./worker-7f7196f3.js",['./comlink-cf15b25f'], function (comlink) { 'use strict';
 
 	function symbolObservablePonyfill(root) {
 		var result;
@@ -447,6 +447,133 @@ define("./worker-cffc6525.js",['./comlink-fd141924'], function (comlink) { 'use 
 
 	}
 
+	function _defineProperty(obj, key, value) {
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+
+	  return obj;
+	}
+
+	function ownKeys(object, enumerableOnly) {
+	  var keys = Object.keys(object);
+
+	  if (Object.getOwnPropertySymbols) {
+	    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
+	  }
+
+	  if (enumerableOnly) keys = keys.filter(function (sym) {
+	    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+	  });
+	  return keys;
+	}
+
+	function _objectSpread2(target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i] != null ? arguments[i] : {};
+
+	    if (i % 2) {
+	      ownKeys(source, true).forEach(function (key) {
+	        _defineProperty(target, key, source[key]);
+	      });
+	    } else if (Object.getOwnPropertyDescriptors) {
+	      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+	    } else {
+	      ownKeys(source).forEach(function (key) {
+	        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+	      });
+	    }
+	  }
+
+	  return target;
+	}
+
+	/**
+	 * Composes single-argument functions from right to left. The rightmost
+	 * function can take multiple arguments as it provides the signature for
+	 * the resulting composite function.
+	 *
+	 * @param {...Function} funcs The functions to compose.
+	 * @returns {Function} A function obtained by composing the argument functions
+	 * from right to left. For example, compose(f, g, h) is identical to doing
+	 * (...args) => f(g(h(...args))).
+	 */
+	function compose() {
+	  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+	    funcs[_key] = arguments[_key];
+	  }
+
+	  if (funcs.length === 0) {
+	    return function (arg) {
+	      return arg;
+	    };
+	  }
+
+	  if (funcs.length === 1) {
+	    return funcs[0];
+	  }
+
+	  return funcs.reduce(function (a, b) {
+	    return function () {
+	      return a(b.apply(void 0, arguments));
+	    };
+	  });
+	}
+
+	/**
+	 * Creates a store enhancer that applies middleware to the dispatch method
+	 * of the Redux store. This is handy for a variety of tasks, such as expressing
+	 * asynchronous actions in a concise manner, or logging every action payload.
+	 *
+	 * See `redux-thunk` package as an example of the Redux middleware.
+	 *
+	 * Because middleware is potentially asynchronous, this should be the first
+	 * store enhancer in the composition chain.
+	 *
+	 * Note that each middleware will be given the `dispatch` and `getState` functions
+	 * as named arguments.
+	 *
+	 * @param {...Function} middlewares The middleware chain to be applied.
+	 * @returns {Function} A store enhancer applying the middleware.
+	 */
+
+	function applyMiddleware() {
+	  for (var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++) {
+	    middlewares[_key] = arguments[_key];
+	  }
+
+	  return function (createStore) {
+	    return function () {
+	      var store = createStore.apply(void 0, arguments);
+
+	      var _dispatch = function dispatch() {
+	        throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
+	      };
+
+	      var middlewareAPI = {
+	        getState: store.getState,
+	        dispatch: function dispatch() {
+	          return _dispatch.apply(void 0, arguments);
+	        }
+	      };
+	      var chain = middlewares.map(function (middleware) {
+	        return middleware(middlewareAPI);
+	      });
+	      _dispatch = compose.apply(void 0, chain)(store.dispatch);
+	      return _objectSpread2({}, store, {
+	        dispatch: _dispatch
+	      });
+	    };
+	  };
+	}
+
 	/*
 	 * This is a dummy function to check if the function name has been altered by minification.
 	 * If the function has been minified and NODE_ENV !== 'production', warn the user.
@@ -458,12 +585,14 @@ define("./worker-cffc6525.js",['./comlink-fd141924'], function (comlink) { 'use 
 	  warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
 	}
 
-	const store = createStore(comlink.reducer);
+	const epicMiddleWare = comlink.createEpicMiddleware();
+	const store = createStore(comlink.rootReducer, applyMiddleware(epicMiddleWare));
+	epicMiddleWare.run(comlink.rootEpic);
 
 	const workerMethods = {
 	    selectors: {
-	        allDataSelector: selectState(comlink.allDataSelector),
-	        dataViewSelector: selectState(comlink.dataViewSelector)
+	        dataViewSelector: selectState(comlink.dataViewSelector),
+	        currentFormulaSelector: selectState(comlink.currentFormulaSelector)
 	    },
 	    dispatch(action) {
 	        store.dispatch(action);

@@ -80,15 +80,7 @@ if (!self.define) {
     });
   };
 }
-define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (require, comlink) { 'use strict';
-
-	function unwrapExports (x) {
-		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-	}
-
-	function createCommonjsModule(fn, module) {
-		return module = { exports: {} }, fn(module, module.exports), module.exports;
-	}
+define("./app-two.8d6adc9c.js",['require', './comlink-cf15b25f'], function (require, comlink) { 'use strict';
 
 	/*
 	object-assign
@@ -288,7 +280,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 
 	var checkPropTypes_1 = checkPropTypes;
 
-	var react_development = createCommonjsModule(function (module) {
+	var react_development = comlink.createCommonjsModule(function (module) {
 
 
 
@@ -2219,7 +2211,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	}
 	});
 
-	var react = createCommonjsModule(function (module) {
+	var react = comlink.createCommonjsModule(function (module) {
 
 	{
 	  module.exports = react_development;
@@ -2231,7 +2223,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	var react_4 = react.useEffect;
 	var react_5 = react.useRef;
 
-	var scheduler_production_min = createCommonjsModule(function (module, exports) {
+	var scheduler_production_min = comlink.createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports,"__esModule",{value:!0});var d=void 0,e=void 0,g=void 0,m=void 0,n=void 0;exports.unstable_now=void 0;exports.unstable_forceFrameRate=void 0;
 	if("undefined"===typeof window||"function"!==typeof MessageChannel){var p=null,q=null,r=function(){if(null!==p)try{var a=exports.unstable_now();p(!0,a);p=null;}catch(b){throw setTimeout(r,0),b;}};exports.unstable_now=function(){return Date.now()};d=function(a){null!==p?setTimeout(d,0,a):(p=a,setTimeout(r,0));};e=function(a,b){q=setTimeout(a,b);};g=function(){clearTimeout(q);};m=function(){return !1};n=exports.unstable_forceFrameRate=function(){};}else{var t=window.performance,u=window.Date,v=window.setTimeout,
 	w=window.clearTimeout,x=window.requestAnimationFrame,y=window.cancelAnimationFrame;"undefined"!==typeof console&&("function"!==typeof x&&console.error("This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills"),"function"!==typeof y&&console.error("This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills"));exports.unstable_now="object"===typeof t&&
@@ -2248,7 +2240,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	exports.unstable_shouldYield=function(){var a=exports.unstable_now();U(a);return null!==O&&null!==M&&M.startTime<=a&&M.expirationTime<O.expirationTime||m()};exports.unstable_requestPaint=aa;exports.unstable_continueExecution=function(){R||Q||(R=!0,d(X));};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return M};
 	});
 
-	unwrapExports(scheduler_production_min);
+	comlink.unwrapExports(scheduler_production_min);
 	var scheduler_production_min_1 = scheduler_production_min.unstable_now;
 	var scheduler_production_min_2 = scheduler_production_min.unstable_forceFrameRate;
 	var scheduler_production_min_3 = scheduler_production_min.unstable_ImmediatePriority;
@@ -2268,7 +2260,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	var scheduler_production_min_17 = scheduler_production_min.unstable_pauseExecution;
 	var scheduler_production_min_18 = scheduler_production_min.unstable_getFirstCallbackNode;
 
-	var scheduler_development = createCommonjsModule(function (module, exports) {
+	var scheduler_development = comlink.createCommonjsModule(function (module, exports) {
 
 
 
@@ -3059,7 +3051,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	}
 	});
 
-	unwrapExports(scheduler_development);
+	comlink.unwrapExports(scheduler_development);
 	var scheduler_development_1 = scheduler_development.unstable_now;
 	var scheduler_development_2 = scheduler_development.unstable_forceFrameRate;
 	var scheduler_development_3 = scheduler_development.unstable_ImmediatePriority;
@@ -3079,7 +3071,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	var scheduler_development_17 = scheduler_development.unstable_pauseExecution;
 	var scheduler_development_18 = scheduler_development.unstable_getFirstCallbackNode;
 
-	var scheduler = createCommonjsModule(function (module) {
+	var scheduler = comlink.createCommonjsModule(function (module) {
 
 	{
 	  module.exports = scheduler_development;
@@ -3335,11 +3327,11 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	Jb=ej;Kb=fj;Lb=aj;Mb=function(a,b){var c=U;U|=2;try{return a(b)}finally{U=c,U===T&&O();}};(function(a){var b=a.findFiberByHostInstance;return tj(objectAssign({},a,{overrideHookState:null,overrideProps:null,setSuspenseHandler:null,scheduleUpdate:null,currentDispatcherRef:Xb.ReactCurrentDispatcher,findHostInstanceByFiber:function(a){a=qd(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null},findHostInstancesForRefresh:null,scheduleRefresh:null,scheduleRoot:null,setRefreshHandler:null,getCurrentFiber:null}))})({findFiberByHostInstance:Ha,bundleType:0,version:"16.9.0",
 	rendererPackageName:"react-dom"});
 
-	var schedulerTracing_production_min = createCommonjsModule(function (module, exports) {
+	var schedulerTracing_production_min = comlink.createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports,"__esModule",{value:!0});var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return ++b};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_wrap=function(a){return a};exports.unstable_subscribe=function(){};exports.unstable_unsubscribe=function(){};
 	});
 
-	unwrapExports(schedulerTracing_production_min);
+	comlink.unwrapExports(schedulerTracing_production_min);
 	var schedulerTracing_production_min_1 = schedulerTracing_production_min.__interactionsRef;
 	var schedulerTracing_production_min_2 = schedulerTracing_production_min.__subscriberRef;
 	var schedulerTracing_production_min_3 = schedulerTracing_production_min.unstable_clear;
@@ -3350,7 +3342,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	var schedulerTracing_production_min_8 = schedulerTracing_production_min.unstable_subscribe;
 	var schedulerTracing_production_min_9 = schedulerTracing_production_min.unstable_unsubscribe;
 
-	var schedulerTracing_development = createCommonjsModule(function (module, exports) {
+	var schedulerTracing_development = comlink.createCommonjsModule(function (module, exports) {
 
 
 
@@ -3773,7 +3765,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	}
 	});
 
-	unwrapExports(schedulerTracing_development);
+	comlink.unwrapExports(schedulerTracing_development);
 	var schedulerTracing_development_1 = schedulerTracing_development.__interactionsRef;
 	var schedulerTracing_development_2 = schedulerTracing_development.__subscriberRef;
 	var schedulerTracing_development_3 = schedulerTracing_development.unstable_clear;
@@ -3784,14 +3776,14 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	var schedulerTracing_development_8 = schedulerTracing_development.unstable_subscribe;
 	var schedulerTracing_development_9 = schedulerTracing_development.unstable_unsubscribe;
 
-	var tracing = createCommonjsModule(function (module) {
+	var tracing = comlink.createCommonjsModule(function (module) {
 
 	{
 	  module.exports = schedulerTracing_development;
 	}
 	});
 
-	var reactDom_development = createCommonjsModule(function (module) {
+	var reactDom_development = comlink.createCommonjsModule(function (module) {
 
 
 
@@ -26713,7 +26705,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	}
 	});
 
-	var reactDom = createCommonjsModule(function (module) {
+	var reactDom = comlink.createCommonjsModule(function (module) {
 
 	{
 	  module.exports = reactDom_development;
@@ -26785,6 +26777,33 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	    }
 	});
 
+	function GridWorksheetDataCell({ top, left, width, height, isColumnSelected, value }) {
+	    const [displayValue, setDisplayValue] = react_3(null);
+	    react_4(() => {
+	        if (value === null || value === undefined) {
+	            setDisplayValue(null);
+	        }
+	        else if (typeof value === "object") {
+	            if (value.type === "mathjs") {
+	                const mathValue = JSON.parse(value.serialized, comlink.json.reviver);
+	                setDisplayValue(mathValue.toString());
+	            }
+	            else {
+	                setDisplayValue(JSON.stringify(value));
+	            }
+	        }
+	        else {
+	            setDisplayValue(value);
+	        }
+	    }, [value]);
+	    return (react.createElement("div", { className: isColumnSelected ? "cell selected" : "cell", style: {
+	            top,
+	            left,
+	            width,
+	            height
+	        } }, displayValue));
+	}
+
 	function GridWorksheetData({ viewData, dataWidth, dataHeight }) {
 	    const divRef = react_5(null);
 	    const { dispatch } = react_2(AppStoreContext);
@@ -26801,24 +26820,21 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	        }
 	    };
 	    return (react.createElement("div", { ref: divRef, onScroll: onScroll },
-	        react.createElement("div", { style: { width: dataWidth, height: dataHeight } }, viewData.map(({ row, col, top, left, width, height, value }) => {
-	            return (react.createElement("div", { className: "cell", key: `${row}-${col}`, style: {
-	                    top,
-	                    left,
-	                    width,
-	                    height
-	                } }, value));
-	        }))));
+	        react.createElement("div", { style: { width: dataWidth, height: dataHeight } }, viewData.map(({ row, col, top, left, width, height, isColumnSelected, value }) => (react.createElement(GridWorksheetDataCell, { key: `${row}-${col}`, top: top, left: left, width: width, height: height, isColumnSelected: isColumnSelected, value: value }))))));
 	}
 
 	function GridColumnHeader({ headers }) {
-	    return (react.createElement("div", null, headers.map(({ col, top, left, width, height }) => {
-	        return (react.createElement("div", { className: "cell", key: col, style: {
+	    const { dispatch } = react_2(AppStoreContext);
+	    return (react.createElement("div", null, headers.map(({ col, top, left, width, height, isColumnSelected }) => {
+	        const onClick = () => {
+	            dispatch(comlink.setGridSelectedColumnAction({ columnIndex: col }));
+	        };
+	        return (react.createElement("div", { className: isColumnSelected ? "cell selected" : "cell", key: col, style: {
 	                top,
 	                left,
 	                width,
 	                height
-	            } }, `C${col + 1}`));
+	            }, onClick: onClick }, `C${col + 1}`));
 	    })));
 	}
 
@@ -26843,7 +26859,7 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	    return currentState;
 	}
 
-	var css$1 = ".grid {\n  position: relative;\n  --column-header-height: 30px;\n  --row-header-width: 60px;\n}\n\n.grid > div:nth-of-type(1) {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  overflow: scroll;\n}\n\n.grid > div:nth-of-type(1) > div {\n  position: relative;\n  margin-top: var(--column-header-height);\n  margin-left: var(--row-header-width);\n}\n\n.grid > div:nth-of-type(2) {\n  position: absolute;\n  top: 0;\n  left: var(--row-header-width);\n  width: calc(100% - 1rem - var(--row-header-width));\n  height: var(--column-header-height);\n  background-color: #eee;\n  overflow: hidden;\n}\n\n.grid > div:nth-of-type(3) {\n  position: absolute;\n  top: var(--column-header-height);\n  left: 0;\n  width: var(--row-header-width);\n  height: calc(100% - 1rem - var(--column-header-height));\n  background-color: #eee;\n  overflow: hidden;\n}\n\n.grid .cell {\n  border: 1px solid #ddd;\n  position: absolute;\n  padding: 4px;\n  overflow: hidden;\n}";
+	var css$1 = ".grid {\n  position: relative;\n  --column-header-height: 30px;\n  --row-header-width: 60px;\n  background-color: white;\n}\n\n.grid > div:nth-of-type(1) {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  overflow: scroll;\n}\n\n.grid > div:nth-of-type(1) > div {\n  position: relative;\n  margin-top: var(--column-header-height);\n  margin-left: var(--row-header-width);\n}\n\n.grid > div:nth-of-type(1) > div .cell.selected {\n  background-color: cornsilk;\n}\n\n.grid > div:nth-of-type(2) {\n  position: absolute;\n  top: 0;\n  left: var(--row-header-width);\n  width: calc(100% - 1rem - var(--row-header-width));\n  height: var(--column-header-height);\n  background-color: #eee;\n  overflow: hidden;\n}\n\n.grid > div:nth-of-type(2) .cell {\n  cursor: pointer;\n}\n\n.grid > div:nth-of-type(2) .cell.selected {\n  background-color: wheat;\n}\n\n.grid > div:nth-of-type(3) {\n  position: absolute;\n  top: var(--column-header-height);\n  left: 0;\n  width: var(--row-header-width);\n  height: calc(100% - 1rem - var(--column-header-height));\n  background-color: #eee;\n  overflow: hidden;\n}\n\n.grid .cell {\n  border: 1px solid #ddd;\n  position: absolute;\n  padding: 4px;\n  overflow: hidden;\n}";
 	styleInject(css$1);
 
 	function DataGrid() {
@@ -26865,39 +26881,71 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	styleInject(css$2);
 
 	const sizes = [
-	    { name: "Small", rows: 50, cols: 50 },
-	    { name: "Medium", rows: 1000, cols: 700 },
-	    { name: "Large", rows: 10000, cols: 4000 }
+	    ["Small", comlink.DataSizes.Small],
+	    ["Medium", comlink.DataSizes.Medium],
+	    ["Large", comlink.DataSizes.Large]
 	];
 	function Header({ title }) {
 	    const { dispatch } = react_2(AppStoreContext);
-	    react_4(() => {
-	        setTimeout(() => {
-	            dispatch(comlink.resetDataAction({ rows: 50, cols: 30 }));
-	        });
-	    }, []);
 	    return (react.createElement("div", { className: "app-header" },
 	        react.createElement("div", null, title),
-	        react.createElement("div", null, sizes.map(({ name, rows, cols }) => (react.createElement("button", { type: "button", onClick: () => dispatch(comlink.resetDataAction({ rows, cols })), key: name }, name))))));
+	        react.createElement("div", null, sizes.map(([name, size]) => (react.createElement("button", { type: "button", onClick: () => dispatch(comlink.resetExampleDataAction({
+	                size
+	            })), key: size }, name))))));
 	}
 
-	var css$3 = ".grid-menu > span {\n  display: inline-block;\n  margin-right: 1rem;\n}";
+	var css$3 = ".grid-menu {\n  display: flex;\n}\n\n.grid-menu > div:nth-of-type(1) {\n  flex: 1;\n  white-space: nowrap;\n}\n\n.grid-menu > div:nth-of-type(1) span {\n  display: inline-block;\n  margin-right: 1rem;\n}\n\n.grid-menu > div:nth-of-type(2) {\n  flex: 1;\n  text-align: right;\n}\n\n.grid-menu > div:nth-of-type(2) span {\n  padding-right: 0.5rem;\n}\n\n.grid-menu > div:nth-of-type(2) input {\n  padding: 4px;\n  width: 75%;\n}";
 	styleInject(css$3);
 
 	function DataGridMenu() {
+	    const { columnId, formula, columnIndex } = useStateSelector(comlink.WithSelector.currentFormulaSelector) || {
+	        columnId: "",
+	        formula: "",
+	        columnIndex: -1
+	    };
 	    const { dispatch } = react_2(AppStoreContext);
+	    const [editFormula, setEditFormula] = react_3(formula);
+	    react_4(() => {
+	        setEditFormula(formula);
+	    }, [columnId, formula]);
+	    const onChange = (evt) => {
+	        setEditFormula(evt.target.value);
+	    };
+	    const onKeyUp = (evt) => {
+	        if (evt.key === "Enter") {
+	            dispatch(comlink.applyFormulaAction({
+	                columnIndex,
+	                formula: editFormula
+	            }));
+	        }
+	    };
 	    return (react.createElement("div", { className: "grid-menu" },
-	        react.createElement("span", null, "Add Column:"),
-	        react.createElement("span", null,
-	            react.createElement("button", { type: "button", onClick: () => dispatch(comlink.addRandomDataColumnAction()) }, "Random Data"))));
+	        react.createElement("div", null,
+	            react.createElement("span", null, "Add Column:"),
+	            react.createElement("span", null,
+	                react.createElement("button", { type: "button", onClick: () => dispatch(comlink.addRandomDataColumnAction()) }, "Random Data"))),
+	        columnId && (react.createElement("div", null,
+	            react.createElement("label", null,
+	                react.createElement("span", null,
+	                    columnId,
+	                    ":"),
+	                react.createElement("input", { type: "text", onChange: onChange, onKeyUp: onKeyUp, value: editFormula }))))));
 	}
 
 	function Main({ title }) {
+	    const { dispatch } = react_2(AppStoreContext);
+	    react_4(() => {
+	        setTimeout(() => {
+	            dispatch(comlink.resetExampleDataAction({
+	                size: comlink.DataSizes.Small
+	            }));
+	        });
+	    }, []);
 	    return (react.createElement(Layout, { renderMenu: () => react.createElement(Header, { title: title }), renderHeader: () => react.createElement(DataGridMenu, null), renderTable: () => react.createElement(DataGrid, null) }));
 	}
 
 	function initializeWorker() {
-	    const worker = new Worker(new URL(require.toUrl('./worker-cffc6525.js'), document.baseURI).href);
+	    const worker = new Worker(new URL(require.toUrl('./worker-7f7196f3.js'), document.baseURI).href);
 	    const workerProxy = comlink.wrap(worker);
 	    let subscriptionIdCounter = 0;
 	    const subscriptions = new Map();
@@ -26905,8 +26953,8 @@ define("./app-two.12af1467.js",['require', './comlink-fd141924'], function (requ
 	    workerProxy.onUpdate(proxyCallback);
 	    return {
 	        selectors: {
-	            allDataSelector: () => comlink.allDataSelector(comlink.initialState),
-	            dataViewSelector: () => comlink.dataViewSelector(comlink.initialState)
+	            dataViewSelector: () => comlink.dataViewSelector(comlink.initialState),
+	            currentFormulaSelector: () => comlink.currentFormulaSelector(comlink.initialState)
 	        },
 	        async dispatch(action) {
 	            await workerProxy.dispatch(action);

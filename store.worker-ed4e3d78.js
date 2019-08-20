@@ -80,9 +80,11 @@ if (!self.define) {
     });
   };
 }
-define("./store.worker-a9a6aa63.js",['./index-9e39ae10'], function (index) { 'use strict';
+define("./store.worker-ed4e3d78.js",['./index-82537574'], function (index) { 'use strict';
 
-	const store = index.createStore(index.reducer);
+	const epicMiddleWare = index.createEpicMiddleware();
+	const store = index.createStore(index.rootReducer, index.applyMiddleware(epicMiddleWare));
+	epicMiddleWare.run(index.rootEpic);
 
 	index.exposeStore(store);
 
