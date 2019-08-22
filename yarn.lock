@@ -5016,10 +5016,10 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
-redux-in-worker@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/redux-in-worker/-/redux-in-worker-0.4.0.tgz#3a7a06f9ea54d1952d703a5d195bc0cd42da7d14"
-  integrity sha512-m8sFQnCoO2BNx2cQPwuF0MOaCBkMXrS5f9NSJ/NZWSSbZQyWzO1ytLT6kdYPK2/0DbKdG1cuPPflsupWVKq5/w==
+redux-in-worker@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/redux-in-worker/-/redux-in-worker-0.7.0.tgz#da2f96ebf4569b986290c491a4b6349abbf6e5a2"
+  integrity sha512-kIbddbHe9n4MRQxLy+fZVotxdoJu04/29xBDX0WmcSEvbQedPG7K1XWWB4PtI7ZBe0hnLsf0ekDvwNN9K55rrQ==
 
 redux-observable@^1.1.0:
   version "1.1.0"
