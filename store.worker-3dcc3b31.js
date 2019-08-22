@@ -80,7 +80,7 @@ if (!self.define) {
     });
   };
 }
-define("./store.worker-ed4e3d78.js",['./index-82537574'], function (index) { 'use strict';
+define("./store.worker-3dcc3b31.js",['./index-2703ecdb'], function (index) { 'use strict';
 
 	const epicMiddleWare = index.createEpicMiddleware();
 	const store = index.createStore(index.rootReducer, index.applyMiddleware(epicMiddleWare));

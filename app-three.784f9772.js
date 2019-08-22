@@ -80,7 +80,7 @@ if (!self.define) {
     });
   };
 }
-define("./app-three.305d9601.js",['require', './index-82537574'], function (require, index) { 'use strict';
+define("./app-three.784f9772.js",['require', './index-2703ecdb'], function (require, index) { 'use strict';
 
 	/*
 	object-assign
@@ -27171,7 +27171,7 @@ define("./app-three.305d9601.js",['require', './index-82537574'], function (requ
 	    selectedColumnIndex: 5
 	};
 
-	const store = index.wrapStore(new Worker(new URL(require.toUrl('./store.worker-ed4e3d78.js'), document.baseURI).href), initialState);
+	const store = index.wrapStore(new Worker(new URL(require.toUrl('./store.worker-3dcc3b31.js'), document.baseURI).href), initialState);
 	const appStoreMethods = {
 	    selectors: {
 	        dataViewSelector: () => dataViewSelector(store.getState()),

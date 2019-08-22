@@ -1,4 +1,4 @@
-define("./index-82537574.js",['exports'], function (exports) { 'use strict';
+define("./index-2703ecdb.js",['exports'], function (exports) { 'use strict';
 
 	function symbolObservablePonyfill(root) {
 		var result;
@@ -503,78 +503,11 @@ define("./index-82537574.js",['exports'], function (exports) { 'use strict';
 	  warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
 	}
 
-	/* eslint no-param-reassign: 0, no-console: 0 */
-
-	const objMap = new Map();
-	const applyPatches = (oldState, patches) => {
-	  let state = oldState;
-	  patches.forEach((patch) => {
-	    switch (patch.type) {
-	      case 'CREATE_OBJECT': {
-	        const obj = patch.isArray ? [] : {};
-	        patch.props.forEach((prop) => {
-	          if (prop.type === 'OBJECT') {
-	            obj[prop.name] = objMap.get(prop.id);
-	          } else {
-	            obj[prop.name] = prop.value;
-	          }
-	        });
-	        objMap.set(patch.id, obj);
-	        break;
-	      }
-	      case 'DELETE_OBJECT':
-	        objMap.delete(patch.id);
-	        break;
-	      case 'RETURN_STATE':
-	        state = objMap.get(patch.id);
-	        break;
-	      default:
-	        throw new Error(`wrapStore unknown patch type: ${patch.type}`);
-	    }
-	  });
-	  return state;
-	};
-
-	const applyWorker = worker => createStoreOrig => (reducer, ...rest) => {
-	  const REPLACE_STATE = Symbol('REPLACE_STATE');
-	  const wrappedReducer = (state, action) => {
-	    if (action.type === REPLACE_STATE) return action.state;
-	    return reducer(state, action);
-	  };
-	  const store = createStoreOrig(wrappedReducer, ...rest);
-	  const dispatch = (action) => {
-	    if (typeof action.type === 'string') {
-	      worker.postMessage(action);
-	    } else {
-	      store.dispatch(action);
-	    }
-	  };
-	  worker.onmessage = (e) => {
-	    const state = applyPatches(store.getState(), e.data);
-	    store.dispatch({ type: REPLACE_STATE, state });
-	  };
-	  worker.onerror = () => {
-	    console.error('wrapStore worker error');
-	  };
-	  worker.onmessageerror = () => {
-	    console.error('wrapStore worker message error');
-	  };
-	  return {
-	    ...store,
-	    dispatch,
-	  };
-	};
-
-	const wrapStore = (worker, initialState, enhancer) => {
-	  const store = createStore(
-	    state => state, // pass through reducer
-	    initialState,
-	    compose(applyWorker(worker), enhancer || (x => x)),
-	  );
-	  return store;
-	};
-
 	/* eslint no-plusplus: 0 */
+
+	const PATCH_TYPE_CREATE_OBJECT = 1;
+	const PATCH_TYPE_DELETE_OBJECT = 2;
+	const PATCH_TYPE_RETURN_STATE = 3;
 
 	let idCount = 0;
 	const idSet = new Set();
@@ -600,7 +533,7 @@ define("./index-82537574.js",['exports'], function (exports) { 'use strict';
 	    }
 	  };
 
-	  // so ugly, needs refinement
+	  // is there a better way?
 	  const walk = (rootObj) => {
 	    const rootDest = {};
 	    const pending = [{ obj: rootObj, dest: rootDest }];
@@ -614,21 +547,21 @@ define("./index-82537574.js",['exports'], function (exports) { 'use strict';
 	        dest.id = id;
 	        idMap.set(obj, id);
 	        idSet.add(id);
-	        const keys = Object.keys(obj);
-	        const props = new Array(keys.length);
+	        const props = {};
 	        patches.unshift({
-	          type: 'CREATE_OBJECT',
+	          type: PATCH_TYPE_CREATE_OBJECT,
 	          isArray: Array.isArray(obj),
 	          id,
 	          props,
 	        });
-	        keys.forEach((name, i) => {
-	          if (typeof obj[name] === 'object' && obj[name] !== null) {
-	            const prop = { type: 'OBJECT', name };
-	            props[i] = prop;
-	            pending.push({ obj: obj[name], dest: prop });
+	        Object.keys(obj).forEach((name) => {
+	          const value = obj[name];
+	          if (typeof value === 'object' && value !== null) {
+	            const prop = {};
+	            props[name] = prop;
+	            pending.push({ obj: value, dest: prop });
 	          } else {
-	            props[i] = { name, value: obj[name] };
+	            props[name] = value;
 	          }
 	        });
 	      }
@@ -637,14 +570,14 @@ define("./index-82537574.js",['exports'], function (exports) { 'use strict';
 	  };
 
 	  patches.push({
-	    type: 'RETURN_STATE',
+	    type: PATCH_TYPE_RETURN_STATE,
 	    id: walk(state),
 	  });
 
 	  idSetToRemove.forEach((id) => {
 	    idSet.delete(id);
 	    patches.push({
-	      type: 'DELETE_OBJECT',
+	      type: PATCH_TYPE_DELETE_OBJECT,
 	      id,
 	    });
 	  });
@@ -665,6 +598,79 @@ define("./index-82537574.js",['exports'], function (exports) { 'use strict';
 	  };
 	  store.subscribe(listener);
 	  listener(); // run once
+	};
+
+	/* eslint no-param-reassign: 0, no-console: 0 */
+
+	const REPLACE_STATE = Symbol('REPLACE_STATE');
+
+	const applyPatches = (objMap, oldState, patches) => {
+	  let state = oldState;
+	  patches.forEach((patch) => {
+	    switch (patch.type) {
+	      case PATCH_TYPE_CREATE_OBJECT: {
+	        const obj = patch.isArray ? [] : {};
+	        Object.keys(patch.props).forEach((name) => {
+	          const value = patch.props[name];
+	          if (typeof value === 'object' && value !== null) {
+	            obj[name] = objMap.get(value.id);
+	          } else {
+	            obj[name] = value;
+	          }
+	        });
+	        objMap.set(patch.id, obj);
+	        break;
+	      }
+	      case PATCH_TYPE_DELETE_OBJECT:
+	        objMap.delete(patch.id);
+	        break;
+	      case PATCH_TYPE_RETURN_STATE:
+	        state = objMap.get(patch.id);
+	        break;
+	      default:
+	        throw new Error(`wrapStore unknown patch type: ${patch.type}`);
+	    }
+	  });
+	  return state;
+	};
+
+	const applyWorker = worker => createStoreOrig => (...args) => {
+	  const store = createStoreOrig(...args);
+	  const dispatch = (action) => {
+	    if (typeof action.type === 'string') {
+	      worker.postMessage(action);
+	    } else {
+	      store.dispatch(action);
+	    }
+	  };
+	  const objMap = new Map();
+	  worker.onmessage = (e) => {
+	    const state = applyPatches(objMap, store.getState(), e.data);
+	    store.dispatch({ type: REPLACE_STATE, state });
+	  };
+	  worker.onerror = () => {
+	    console.error('wrapStore worker error');
+	  };
+	  worker.onmessageerror = () => {
+	    console.error('wrapStore worker message error');
+	  };
+	  return {
+	    ...store,
+	    dispatch,
+	  };
+	};
+
+	const wrapStore = (worker, initialState, enhancer) => {
+	  const reducer = (state, action) => {
+	    if (action.type === REPLACE_STATE) return action.state;
+	    return state;
+	  };
+	  const store = createStore(
+	    reducer,
+	    initialState,
+	    compose(applyWorker(worker), enhancer || (x => x)),
+	  );
+	  return store;
 	};
 
 	const initialState = {
