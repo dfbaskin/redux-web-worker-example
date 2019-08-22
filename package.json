@@ -24,7 +24,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "redux": "^4.0.4",
-    "redux-in-worker": "^0.4.0",
+    "redux-in-worker": "^0.7.0",
     "redux-observable": "^1.1.0",
     "reselect": "^4.0.0",
     "rxjs": "^6.5.2"
